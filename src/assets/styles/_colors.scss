@@ -1,0 +1,23 @@
+/*========== VARIABLES SCSS ==========*/
+
+
+/*========== COULEURS ==========*/
+$hue: 206;
+$black: hsl($hue, 4%, 4%);
+$black-alt: hsl($hue, 4%, 8%);
+$title: hsl($hue, 4%, 95%);
+$text: hsl($hue, 4%, 75%);
+$text-light: hsl($hue, 4%, 65%);
+$white: hsl($hue, 100%, 100%);
+$body: hsl($hue, 4%, 6%);
+$container: hsl($hue, 4%, 10%);
+$text-gradient: linear-gradient(hsl($hue, 4%, 24%), hsl($hue, 4%, 8%));
+$scroll-thumb-color: hsl($hue, 4%, 16%);
+$scroll-thumb-color-alt: hsl($hue, 4%, 20%);
+
+@mixin gradient {
+  color: transparent;
+  background: $text-gradient;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
