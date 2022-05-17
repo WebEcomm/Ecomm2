@@ -4,7 +4,14 @@
 </template>
 
 <script setup>
+//import { computed } from 'vue';
+//import { useStore } from 'vuex';
+// import types from '@/store';
 import { HeaderView } from '@/views';
+
+//const store = useStore();
+
+
 </script>
 
 <style lang="scss">
