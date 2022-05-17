@@ -16,6 +16,9 @@ const productItems = [
   { id: 4, icon: 'product5.png', title: 'Beats Solo5', price: 249.6, rate: 4 },
 ];
 
+// contient les identifiants des produits favoris.
+const favouriteItems = []
+
 
 export {
   categoryItems,
