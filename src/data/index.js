@@ -17,7 +17,7 @@ const productItems = [
 ];
 
 // contient les identifiants des produits favoris.
-const favouriteItems = []
+/* const favouriteItems = [] */
 
 
 export {
