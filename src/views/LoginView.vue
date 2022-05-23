@@ -1,5 +1,5 @@
 .<template>
-  <div>
+  <div class="form">
   <form class="login--form" @submit.prevent="login">
     <h2>Login</h2>
     <input
@@ -9,7 +9,7 @@
     />
     <input
       type="password"
-      placeholder="password..."
+      placeholder="Password..."
       v-model="password"
     />
     <button type="submit">Login</button>
@@ -37,13 +37,22 @@ methods: {
 </script>
 
 <style lang="scss">
-.login--form {
-  padding-top : 80px;
+.form {
+  margin-top : 50%;
+  h2 {
+    text-align: center;
+  }
   input {
+    padding : 0.8rem;
+    margin : 1rem;
     border-color: white;
     color: white;
+    border-bottom: 1px solid white;
   }
   button {
+    padding : 15px 24px;
+    font-size: 1rem;
+    border: 1px solid white;
     color: white;
   }
 }
