@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import {firebase} from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+
 
 
 export default {
@@ -31,9 +31,8 @@ export default {
 },
 methods: {
   register() {
-      firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.email, this.password)
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, this.email, this.password)
       .then(() => {
         alert('Successfully registered! Please login.');
         this.$router.push('/');

@@ -1,6 +1,6 @@
 .<template>
   <div>
-  <form class="login--form" @submit.prevent="register">
+  <form class="login--form" @submit.prevent="login">
     <h2>Login</h2>
     <input
       type="email"
@@ -18,16 +18,15 @@
 </template>
 
 <script>
-import {firebase} from 'firebase/auth'
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 export default {
 methods: {
   login() {
-    firebase
-    .auth
-      .signInWithEmailAndPassword(this.email, this.password)
+    const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.email, this.password)
       .then(() => {
         alert('Successfully logged in');
-        this.$router.push('/dashboard');
+        this.$router.push('/');
       })
       .catch(error => {
         alert(error.message);
