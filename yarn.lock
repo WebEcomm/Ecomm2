@@ -3951,7 +3951,7 @@
     "@google-cloud/firestore" "^4.15.1"
     "@google-cloud/storage" "^5.18.3"
 
-"firebase@^9.8.0":
+"firebase@^9.8.1":
   "integrity" "sha512-VyM+3ijzB1Q24b9v6HzVOB0bXNy0a/maOZlmv2P8M29VXfrS/npo6zntNiOEtcjrCoItZIuWFH4oDGiYkPHxbg=="
   "resolved" "https://registry.npmjs.org/firebase/-/firebase-9.8.1.tgz"
   "version" "9.8.1"

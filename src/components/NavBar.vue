@@ -32,6 +32,8 @@ const menuLinks = [
   { id: 2, name: 'Specs', path: '/specs' },
   { id: 3, name: 'Case', path: '/cases' },
   { id: 4, name: 'Products', path: '/products' },
+  { id: 5, name: 'Register', path: '/register' },
+  { id: 6, name: 'Login', path: '/login' },
 ];
 
 const showMenu = ref(false);
