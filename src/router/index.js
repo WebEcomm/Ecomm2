@@ -23,6 +23,12 @@ const routes = [
     name: "products",
     component: ProductView,
   },
+  // { 
+  //   name: 'movie',
+  //   path: '/movie/:id', 
+  //   component: () => import('@/views/MovieView.vue'), 
+  //   props:true 
+  // },
   { 
     path: '/:pathMatch(.*)*', 
     name: 'not-found', 

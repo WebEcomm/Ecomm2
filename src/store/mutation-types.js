@@ -1,5 +1,1 @@
-const INCREMENT = 'INCREMENT';
-
-export {
-    INCREMENT,
-};
+export const SET_NOTE = 'SET_NOTE'

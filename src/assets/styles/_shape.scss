@@ -1,0 +1,22 @@
+
+
+@mixin square($size, $radius:null, $fill:null) {
+  width: $size;
+  height: $size;
+  background-color: $fill;
+  border-radius: $radius;
+};
+
+@mixin box($width, $height, $radius:null, $fill:null) {
+  width: $width;
+  height: $height;
+  background-color: $fill;
+  border-radius: $radius;
+}
+
+@mixin circle($size, $fill:null) {
+  width: $size;
+  height: $size;
+  background-color: $fill;
+  border-radius: 50%;
+}

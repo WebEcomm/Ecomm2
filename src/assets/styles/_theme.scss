@@ -1,0 +1,43 @@
+/*========== VARIABLES SCSS ==========*/
+
+
+/*========== THEME ==========*/
+$hue: 240;
+
+$themes: (
+  default:(
+    primary: hsl($hue, 53%, 49%),
+    primary-alt: hsl($hue, 53%, 45%),
+    primary-light: hsl($hue, 53%, 85%),
+    title: hsl($hue, 53%, 15%),
+    text: hsl($hue, 12%, 35%),
+    text-light: hsl($hue, 12%, 65%),
+    white: hsl($hue, 100%, 100%),
+    body: hsl($hue, 24%, 94%),
+  ),
+  dark: (
+    title: hsl($hue, 12%, 95%),
+    text: hsl($hue, 12%, 75%),
+    text-light: hsl($hue, 12%, 65%),
+    body: hsl($hue, 10%, 16%),
+  ),
+);
+
+@mixin themed() {
+  @each $theme, $map in $themes {
+    .theme--#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function t($key) {
+  @return map-get($theme-map, $key);
+}
+

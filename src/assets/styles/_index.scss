@@ -4,4 +4,6 @@
 
 @forward './sizes' as size-*;
 
+@forward './shape' as shape-*;
+
 @forward  './breakpoint' as media-*;

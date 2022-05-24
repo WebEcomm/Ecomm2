@@ -2,22 +2,36 @@
 
 
 /*========== COULEURS ==========*/
-$hue: 206;
-$black: hsl($hue, 4%, 4%);
-$black-alt: hsl($hue, 4%, 8%);
-$title: hsl($hue, 4%, 95%);
-$text: hsl($hue, 4%, 75%);
-$text-light: hsl($hue, 4%, 65%);
+$hue: 240;
+$primary: hsl($hue, 53%, 49%);
+$primary-alt: hsl($hue, 53%, 45%);
+$primary-light: hsl($hue, 53%, 90%);
+$title: hsl($hue, 53%, 15%);
+$icon: hsl($hue, 80%, 94%);
+$text: hsl($hue, 12%, 35%);
+$text-light: hsl($hue, 12%, 65%);
 $white: hsl($hue, 100%, 100%);
-$body: hsl($hue, 4%, 6%);
-$container: hsl($hue, 4%, 10%);
-$text-gradient: linear-gradient(hsl($hue, 4%, 24%), hsl($hue, 4%, 8%));
-$scroll-thumb-color: hsl($hue, 4%, 16%);
-$scroll-thumb-color-alt: hsl($hue, 4%, 20%);
+$shadow: hsla($hue, 30%, 86%, 1);
+$body: hsl($hue, 24%, 94%);
 
-@mixin gradient {
-  color: transparent;
-  background: $text-gradient;
-  background-clip: text;
-  -webkit-background-clip: text;
+// Dark theme
+$title: hsl($hue, 12%, 95%);
+$text: hsl($hue, 12%, 75%);
+$text-light: hsl($hue, 12%, 65%);
+$white: hsl($hue, 8%, 12%);
+$shadow: hsla($hue, 8%, 20%, 1);
+$body: hsl($hue, 10%, 16%);
+
+@mixin neumorphism-out {
+  box-shadow: -6px -6px 16px $white,
+              6px 6px 16px $shadow,
+              6px 6px 16px $shadow,
+              -6px -6px 16px $white;
+}
+
+@mixin neumorphism-in {
+  box-shadow: -6px -6px 16px $white,
+              6px 6px 16px $shadow,
+              6px 6px 16px $shadow inset,
+              -6px -6px 16px $white inset;
 }

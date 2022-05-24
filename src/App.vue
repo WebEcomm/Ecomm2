@@ -1,17 +1,20 @@
 <template>
-  <header-view/>
-  <router-view/>
+  <main class="theme--dark">
+    <header-view/>
+    <router-view/>
+  </main>
 </template>
 
 <script setup>
-//import { computed } from 'vue';
-//import { useStore } from 'vuex';
-// import types from '@/store';
+import { onMounted } from 'vue';
+import { useStore } from 'vuex';
 import { HeaderView } from '@/views';
 
-//const store = useStore();
+const store = useStore();
 
-
+onMounted(() => {
+  store.dispatch('fetchProducts');
+})
 </script>
 
 <style lang="scss">
@@ -32,19 +35,14 @@ html {
     background-color: $color-body;
     h1,h2,h3 { font-weight: $font-medium; color: $color-title; }
     ul { list-style: none; }
-    // a { text-decoration: none; } /* on utilise <router-link class="link"> pour les liens
-    .link { text-decoration: none; color: $color-text; }
+    a { text-decoration: none; } /* on utilise <router-link class="link"> pour les liens */
+    .link { @extend a; }
     button { @extend input; cursor: pointer; }
     input { border: none; outline: none; background: none; }
     img { max-width: 100%; height: auto; object-fit: cover; }
     main { overflow: hidden; }
     section { 
       padding: 2*$size-xxl 0 $size-xxl 0;
-      .title { 
-        margin-bottom: $size-biggest/2; 
-        text-align: center;
-        font-size: $size-biggest;  
-      } 
     }
     .container { 
       max-width: $size-max-width;

@@ -1,93 +1,109 @@
 <template>
-  <section v-on:scroll.passive="scrollHeader" class="home">
+  <section class="home">
     <div class="container">
-      <!--  -->
-      <div>
-        <img 
-          src="@/assets/images/home.png" 
-          alt="home"
-          class="img"
-        />
-      </div>
-      <!--  -->
+      <!-- IMAGE -->
+      <img src="@/assets/images/home.png" alt="home" class="img" />
+      <!-- DATA -->
       <div class="data">
-        <div class="header">
-          <h2 class="title">On ear</h2>
-          <h2 class="subtitle">Beats 3</h2>
-        </div>
-        <div class="footer">
-          <h2 class="title">Overview</h2>
-          <p class="description">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem, aspernatur consectetur numquam nam assumenda omnis obcaecati reprehenderit tempore cum magnam accusantium blanditiis ratione voluptates tenetur perferendis minima aperiam quod, dolor asperiores placeat ut corrupti laborum. Eius ipsam molestiae deserunt optio!
-          </p>
-          <div class="pricing">
-            <icon-button label="Add to Bage" icon="shopping-bag-line"/>
-            <div class="price">$299</div>
+        <h2 class="title">On ear Beat 3</h2>
+        <p class="description">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam esse tenetur cumque itaque unde velit autem facere, quia aliquid eos.
+        </p>
+        <button class="btn">
+          <span class="label">Explore</span>
+          <div class="icon">
+            <i class='bx bx-right-arrow-alt'></i>
           </div>
-        </div>
+        </button>
+      </div>
+      <!-- SOCIAL -->
+      <div class="social">
+        <span class="follow">Follow Us</span>
+        <div class="separator"></div>
+        <ul class="links">
+          <a href="https://www.facebook.com" target="_blank" class="link">
+            <i class='bx bxl-facebook' ></i>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" class="link">
+            <i class='bx bxl-instagram' ></i>
+          </a>
+          <a href="https://www.twitter.com" target="_blank" class="link">
+            <i class='bx bxl-twitter' ></i>
+          </a>
+        </ul>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-//import { defineEmits } from 'vue';
-import { IconButton } from '@/components';
-const scrollHeader = () => {
-  console.log("scroll")
-}
-//const emit = defineEmits(['scrollHeader'])
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 /*========== VARIABLES ==========*/
 @use '@/assets/styles' as *;
 
 .home {
-  margin-top: $size-header-height;
   .container {
-
-    .img {
-      position: absolute;
-      top: -3*$size-biggest;
-      right: $size-xxl;
-      width: 250px;
-      //z-index: $font-fixed;
-    }
+    position: relative;
+    display: grid;
+    row-gap: $size-xl;
+    .img { width: 200px; justify-self: center; }
     .data {
-      display: grid;
-      margin-top: $size-biggest;
-      .header {
+      .title { text-align: left; margin-bottom: $size-m; }
+      .description { margin-bottom: $size-xxl; }
+      .btn {
+        @include color-neumorphism-out;
         display: flex;
-        flex-direction: column;
-        position: relative;
-        .title { 
-          @include color-gradient;
-          margin: 0; 
+        align-items: center;
+        column-gap: $size-xxs;
+        padding: $size-m $size-l;
+        border-radius: $size-xs;
+        //background-color: $color-primary;
+        transition: .3s;
+        &:hover .icon { 
+          transform: rotate(45deg) translate($size-xxs, -$size-xxs); 
         }
-        .subtitle { 
-          transform: translate(-$size-biggest,-2*$size-xl);
-          text-align: center;
-          font-size: 2*$size-l;
+        &:active {
+          @include color-neumorphism-in;
+        }
+        .label { color: $color-title; }
+        .icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transform: rotate(45deg);
+          transition: .3s;
+          color: $color-title;
+          
         }
       }
-      .footer {
-        .title { 
-          text-align: left;
-          font-size: $size-xl; 
-          margin-bottom: $size-m; 
-        }
-        .description { margin-bottom: 2*$size-xl; }
-        .pricing { 
-          display: flex;
-          align-items: center;
-          column-gap: $size-s;
-          width: max-content;
-          padding-right: $size-s;
-          border-radius: $size-s;
-          background-color: $color-black;
-          &:hover { background-color: $color-black-alt; }
-          .btn { background: transparent; }
+    }
+    .social {
+      position: absolute;
+      top: 2rem;
+      right: -1rem;
+      display: grid;
+      justify-items: center;
+      .follow {
+        position: relative;
+        font-size: $size-s;
+        font-weight: $font-medium;
+        transform: rotate(90deg);
+      }
+      .separator {
+        @include shape-box(2px,$size-l,$size-m,$color-text);
+        margin-top: $size-xxl;
+        margin-bottom: $size-s;
+      }
+      .links {
+        display: flex;
+        flex-direction: column;
+        row-gap: $size-xxs;
+        .link { 
+          color: $color-text-light; 
+          transition: .3s; 
+          &:hover { transform: translateX($size-xs); }
         }
       }
     }

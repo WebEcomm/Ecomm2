@@ -1,17 +1,18 @@
 <template>
   <nav class="container">
     <!-- LOGO -->
-    <router-link to="/" class="logo">
+    <router-link :to="{name: 'home'}" class="link logo">
       <img 
         src="@/assets/images/logo.png" 
         alt="logo"
         class="img"
       />
+      <span>Headphone</span>
     </router-link>
     <!-- MENU -->
     <nav-menu 
       @close-menu="closeMenu"
-      :show-menu="showMenu"
+      :showMenu="showMenu"
       :links="menuLinks" 
     />
     <!-- BOUTON MENU -->
@@ -19,7 +20,7 @@
       @click="openMenu"
       class="toggle"
     >
-      <i class="ri-function-line"></i>
+      <i class='bx bx-grid-alt' ></i>
     </button>
   </nav>
 </template>
@@ -32,8 +33,8 @@ const menuLinks = [
   { id: 2, name: 'Specs', path: '/specs' },
   { id: 3, name: 'Case', path: '/cases' },
   { id: 4, name: 'Products', path: '/products' },
-  { id: 5, name: 'Register', path: '/register' },
-  { id: 6, name: 'Login', path: '/login' },
+  { id: 4, name: 'Login', path: '/login' },
+  { id: 4, name: 'Register', path: '/register' },
 ];
 
 const showMenu = ref(false);
@@ -52,7 +53,7 @@ const closeMenu = () => {
 
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @use '@/assets/styles' as *;
 
 nav {
@@ -61,7 +62,12 @@ nav {
   align-items: center;
   height: $size-header-height;
   background: $color-body;
-  .logo { display: flex; width: $size-xl; }
-  .toggle { font-size: $size-xl; color: $color-white; }
+  .logo { 
+    display: flex; 
+    align-items: center;
+    column-gap: $size-xxs;
+    width: $size-xl; 
+  }
+  .toggle { font-size: $size-xl; color: $color-text; }
 }
 </style>

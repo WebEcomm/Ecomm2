@@ -1,5 +1,5 @@
 <template>
-  <div class="menu" :class="{show: props.showMenu}">
+  <div :class="{'menu': true, 'show': props.showMenu}">
     <!-- LISTE DE LIENS -->
     <ul class="list">
       <li 
@@ -16,7 +16,7 @@
       @click="emit('closeMenu')"
       class="close"
     >
-      <i class="ri-close-line"></i>
+      <span>x</span>
     </button>
   </div>
 </template>
@@ -40,7 +40,7 @@ const props = defineProps({
 const emit = defineEmits(['closeMenu'])
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @use '@/assets/styles' as *;
 
 .menu {
@@ -64,10 +64,7 @@ const emit = defineEmits(['closeMenu'])
         text-transform: uppercase;
         font-size: $size-xl;
         font-weight: $font-semi-bold;
-        color: transparent;
-        background: $color-text-gradient;
-        background-clip: text;
-        -webkit-background-clip: text;
+        // @include color-gradient;
         &:hover {
           background: $color-white;
           background-clip: text;
@@ -81,6 +78,7 @@ const emit = defineEmits(['closeMenu'])
     top: $size-m;
     right: $size-m;
     font-size: $size-xl;
+    color: $color-text;
     &:hover { color: $color-white; }
   }
 }
