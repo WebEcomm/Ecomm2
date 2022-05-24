@@ -7,7 +7,7 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn start
+yarn start et touusss...
 ```
 
 ### Compiles and minifies for production
