@@ -1,6 +1,8 @@
 <template>
   <section>
-    Page introuvable
+    <div class="container">
+      En Développement
+    </div>
   </section>
 </template>
 
