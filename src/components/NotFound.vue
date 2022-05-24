@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container">
-      En Développement
+      En Développement!
     </div>
   </section>
 </template>
