@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
+import {getAuth, createUserWithEmailAndPassword/*,signInWithCustomToken*/} from 'firebase/auth';
 
 
 
@@ -31,15 +31,35 @@ export default {
 },
 methods: {
   register() {
-      const auth = getAuth();
+   
+     const auth = getAuth();
       createUserWithEmailAndPassword(auth, this.email, this.password)
-      .then(() => {
+      .then((reponse) => {
+        //console.log(reponse.user);
         alert('Successfully registered! Please login.');
+        this.$store.dispatch("setUser",reponse.user);
         this.$router.push('/');
       })
       .catch(error => {
         alert(error.message);
       });
+
+      //import { getAuth } from "firebase/auth";
+
+const user = auth.currentUser;
+if (user !== null) {
+  // The user object has basic properties such as display name, email, etc.
+ // const displayName = user.displayName;
+ // const email = user.email;
+ // const photoURL = user.photoURL;
+ // const emailVerified = user.emailVerified;
+
+  // The user's ID, unique to the Firebase project. Do NOT use
+  // this value to authenticate with your backend server, if
+  // you have one. Use User.getToken() instead.
+  const uid = user.uid;
+  console.log(uid);
+} 
   },
 },
 }
