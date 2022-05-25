@@ -31,7 +31,6 @@
 import { defineProps } from 'vue';
 import { useLink, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import { SET_NOTE } from '../store/mutation-types';
 
 const props = defineProps({
   item: {
@@ -43,7 +42,7 @@ const props = defineProps({
 const store = useStore();
 
 const updateNote = (newNote) => {
-  store.dispatch(SET_NOTE, {productId: props.item.id, rate: newNote})
+  store.dispatch('product/setNote', {productId: props.item.id, rate: newNote})
 }
 
 const showProduct = () => {

@@ -2,6 +2,12 @@
   <div class="form">
   <form class="register--form" @submit.prevent="register">
     <h2>Register</h2>
+    <span>{{ user }}</span>
+    <input
+      type="text"
+      placeholder="Name..."
+      v-model="name"
+    />
     <input
       type="email"
       placeholder="Email address..."
@@ -14,55 +20,41 @@
     />
     <button type="submit">Register</button>
   </form>
+  <button @click="logout">Logout</button>
 </div>
 </template>
 
-<script>
-import {getAuth, createUserWithEmailAndPassword/*,signInWithCustomToken*/} from 'firebase/auth';
+<script setup>
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
 
+const store = useStore();
 
+const name = ref('');
+const email = ref('');
+const password = ref('');
 
-export default {
-    data() { 
-  return { 
-    email: '', 
-    password: '', 
-  }; 
-},
-methods: {
-  register() {
-   
-     const auth = getAuth();
-      createUserWithEmailAndPassword(auth, this.email, this.password)
-      .then((reponse) => {
-        //console.log(reponse.user);
-        alert('Successfully registered! Please login.');
-        this.$store.dispatch("setUser",reponse.user);
-        this.$router.push('/');
-      })
-      .catch(error => {
-        alert(error.message);
-      });
+onMounted(() => {
+  store.dispatch('user/isLoggedUser');
+})
 
-      //import { getAuth } from "firebase/auth";
-
-const user = auth.currentUser;
-if (user !== null) {
-  // The user object has basic properties such as display name, email, etc.
- // const displayName = user.displayName;
- // const email = user.email;
- // const photoURL = user.photoURL;
- // const emailVerified = user.emailVerified;
-
-  // The user's ID, unique to the Firebase project. Do NOT use
-  // this value to authenticate with your backend server, if
-  // you have one. Use User.getToken() instead.
-  const uid = user.uid;
-  console.log(uid);
-} 
-  },
-},
+const logout = () => {
+  store.dispatch('user/logout');
 }
+
+const user = computed(() => store.state.user.user);
+
+/**
+ * Créer un utilisateur
+ */
+const register = () => {
+  store.dispatch('user/registerUser', {
+    name: name.value,
+    email: email.value,
+    password: password.value
+  });
+}
+
 </script>
 
 <style lang="scss">

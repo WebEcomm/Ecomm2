@@ -13,7 +13,7 @@ import { HeaderView } from '@/views';
 const store = useStore();
 
 onMounted(() => {
-  store.dispatch('fetchProducts');
+  store.dispatch('product/fetchProducts');
 })
 </script>
 

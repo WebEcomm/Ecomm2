@@ -2,6 +2,7 @@
   <div class="form">
   <form class="login--form" @submit.prevent="login">
     <h2>Login</h2>
+    <span>{{ user }}</span>
     <input
       type="email"
       placeholder="Email address..."
@@ -14,25 +15,37 @@
     />
     <button type="submit">Login</button>
   </form>
+  <button @click="logout">Logout</button>
 </div>
 </template>
 
-<script>
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
-export default {
-methods: {
-  login() {
-    const auth = getAuth();
-      signInWithEmailAndPassword(auth, this.email, this.password)
-      .then(() => {
-        alert('Successfully logged in');
-        this.$router.push('/');
-      })
-      .catch(error => {
-        alert(error.message);
-      });
-  },
-},
+<script setup>
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const email = ref('');
+const password = ref('');
+
+onMounted(() => {
+  store.dispatch('user/isLoggedUser');
+})
+
+const logout = () => {
+  store.dispatch('user/logout');
+}
+
+const user = computed(() => store.state.user.user);
+
+/**
+ * Créer un utilisateur
+ */
+const login = () => {
+  store.dispatch('user/loginUser', {
+    email: email.value,
+    password: password.value
+  });
 }
 </script>
 

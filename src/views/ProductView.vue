@@ -22,7 +22,7 @@ import { useStore } from 'vuex';
 import { ProductCardItem } from '@/components';
 
 const store = useStore();
-const products = computed(() => store.getters.getProducts);
+const products = computed(() => store.getters['product/getProducts']);
 </script>
 
 <style scoped lang="scss">

@@ -42,12 +42,10 @@ const showMenu = ref(false);
 //const emit = defineEmits(['openMenu'])
 
 const openMenu = () => {
-  console.log('menu open!')
   showMenu.value = true;
 }
 
 const closeMenu = () => {
-  console.log('menu closed!')
   showMenu.value = false;
 }
 
