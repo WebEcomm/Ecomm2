@@ -20,7 +20,7 @@
         <h2 class="title">{{ props.item.title }}</h2>
         <span class="price">${{ props.item.price }}</span>
       </div>
-      <button class="btn">
+      <button class="btn" @click="addToCart">
         <i class='bx bx-shopping-bag' ></i>
       </button>
     </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { computed, defineProps } from 'vue';
 import { useLink, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
@@ -40,6 +40,7 @@ const props = defineProps({
 });
 
 const store = useStore();
+const router = useRouter();
 
 const updateNote = (newNote) => {
   store.dispatch('product/setNote', {productId: props.item.id, rate: newNote})
@@ -50,6 +51,18 @@ const showProduct = () => {
   console.log(l.route)
   const r = useRouter();
   r.push({name: 'home', params: {id: props.item.id}})
+}
+
+const addToCart = () => {
+  const user = computed(() => store.getters['user/getUser']);
+  if (user.value) {
+    let msg = `${user.value.name}: product {${props.item.title}} add to your cart!`;
+    alert(msg);
+  } else {
+    let msg = 'Please sign in before !'
+    alert(msg);
+    router.push({name: 'login'});
+  }
 }
 </script>
 

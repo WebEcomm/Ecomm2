@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -34,15 +34,11 @@ const name = ref('');
 const email = ref('');
 const password = ref('');
 
-onMounted(() => {
-  store.dispatch('user/isLoggedUser');
-})
-
 const logout = () => {
   store.dispatch('user/logout');
 }
 
-const user = computed(() => store.state.user.user);
+const user = computed(() => store.getters['user/getUser']);
 
 /**
  * Créer un utilisateur

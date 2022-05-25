@@ -68,9 +68,9 @@ export default {
           console.log(errorMessage);
         });
     },
-    isLoggedUser ({dispatch}) {
+    isLoggedUser ({state, dispatch}) {
       onAuthStateChanged(auth, (user) => {
-        if (user) {
+        if (user && !state.user) {
           // User is signed in
           dispatch('setUserProfile', user);
         }
