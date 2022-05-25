@@ -14,7 +14,9 @@ const store = useStore();
 
 onMounted(() => {
   store.dispatch('product/fetchProducts');
+  store.dispatch('user/isLoggedUser');
 })
+
 </script>
 
 <style lang="scss">
