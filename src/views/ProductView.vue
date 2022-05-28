@@ -54,7 +54,6 @@ const updateCart = (value) => {
   user.value 
     ? msgFlash.value = {label: 'Hi there!', msg: value, flag: 'INFO_FLAG'}
     : msgFlash.value = {label: 'Warning!', msg: value, flag: 'WARNING_FLAG'}
-  console.log(msgFlash.value)
 }
 </script>
 
