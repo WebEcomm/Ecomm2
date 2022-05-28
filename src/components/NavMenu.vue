@@ -3,12 +3,12 @@
     <!-- LISTE DE LIENS -->
     <ul class="list">
       <li 
-        @click="emit('closeMenu')"
-        v-for="(item) in props.links" 
-        :key="item.id"
         class="item"
+        :key="link.id"
+        v-for="(link) in props.links" 
+        @click="handleClick(link)"
       >
-        <router-link :to="item.path" class="link">{{ item.name }}</router-link>
+        <router-link :to="link.path" class="link">{{ link.name }}</router-link>
       </li>
     </ul>
     <!-- BOUTON CLOSE -->
@@ -23,6 +23,10 @@
     
 <script setup>
 import { defineEmits, defineProps } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
 const props = defineProps({
   showMenu: {
     type: Boolean,
@@ -35,6 +39,12 @@ const props = defineProps({
     }
   }
 });
+
+const handleClick = (link) => {
+  if (link.name === 'Déconnexion')
+  { store.dispatch('user/logout'); }
+  emit('closeMenu');
+}
 
 // Evenements personalisés
 const emit = defineEmits(['closeMenu'])

@@ -51,16 +51,19 @@ export default {
       });
     },
     loginUser ({dispatch}, {email, password}) {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          dispatch('setUserProfile', user);
-        })
+      return new Promise((resolve, reject ) => {
+        signInWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            dispatch('isLoggedUser');
+          })
+          .catch((error) => {
+            reject(error);
+          })
+      });
     },
     registerUser ({dispatch}, {name, email, password}) {
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          localStorage.setItem('userToken', userCredential._tokenResponse.idToken);
+        .then(() => {
           dispatch('updateUserProfile', name);
         })
         .catch((error) => {
@@ -75,20 +78,6 @@ export default {
           dispatch('setUserProfile', user);
         }
       });
-      /*const userToken = localStorage.getItem('userToken');
-      console.log(userToken);
-      if (userToken) {
-        signInWithCustomToken(auth, userToken)
-          .then(() => {
-            // Signed in
-            dispatch('setUserProfile');
-            // ...
-          })
-          .catch((error) => {
-            console.log(error);
-            // ...
-          })
-      }*/
     },
     logout ({state, commit}) {
       if (state.user) {

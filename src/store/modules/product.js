@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, updateDoc, where, query, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db, getFileURL } from '@/firebase';
 import { SET_NOTE } from '@/store/mutation-types';
 
@@ -56,6 +56,24 @@ export default {
         };
         commit('setProducts', product);
       })
+    },
+    async test () {
+      const q = query(collection(db, "cart"), where("clientId", "==", "1"));
+      
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (docu) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(docu.id, " => ", docu.data().clientId);
+        // Atomically add a new region to the "regions" array field.
+        await updateDoc(doc(db, "cart", docu.id), {
+          region: arrayUnion("greater_virginia", "dfhgjhkjl")
+        });
+        // Atomically remove a region from the "regions" array field.
+        await updateDoc(doc(db, "cart", docu.id), {
+          regions: arrayRemove("greater_virginia")
+        });
+      });
+
     }
   }  
 };

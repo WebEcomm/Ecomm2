@@ -53,7 +53,7 @@ const register = () => {
 
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .form {
   margin-top : 50%;
   h2 {

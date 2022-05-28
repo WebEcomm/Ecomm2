@@ -25,7 +25,7 @@ const auth = getAuth(firebase);
  * @return { String } l'url du fichier
  */
 function getFileURL (filename) {
-  const fileURL = getDownloadURL(ref(storage, filename))
+  const fileURL = getDownloadURL(ref(storage, `images/${filename}`))
     .catch((error) => {
       // A full list of error codes is available at
       // https://firebase.google.com/docs/storage/web/handle-errors

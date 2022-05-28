@@ -26,20 +26,53 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
+import { useStore } from 'vuex';
 import { NavMenu } from './';
-const menuLinks = [
+
+const menuLinks = ref([
   { id: 1, name: 'Home', path: '/' },
   { id: 2, name: 'Specs', path: '/specs' },
   { id: 3, name: 'Case', path: '/cases' },
   { id: 4, name: 'Products', path: '/products' },
-  { id: 4, name: 'Login', path: '/login' },
-  { id: 4, name: 'Register', path: '/register' },
-];
+]);
+
+const store = useStore();
+
+const user = computed(() => store.getters['user/getUser']);
 
 const showMenu = ref(false);
 
-//const emit = defineEmits(['openMenu'])
+onBeforeMount(() => {
+  showAuthLink(user.value);
+})
+
+watch(user, (currentUser) => {
+  showAuthLink(currentUser);
+})
+
+const showAuthLink = (currentUser) => {
+  //
+  if (currentUser) {
+    //
+    menuLinks.value = [
+      ...menuLinks.value,
+      {id: '5', name: 'Déconnexion', path: './'}
+    ];
+    menuLinks.value 
+      = menuLinks.value
+        .filter((link) => link.name !== 'Connexion');
+  } else {
+    //
+    menuLinks.value = [
+      ...menuLinks.value,
+      {id: '5', name: 'Connexion', path: './login'}
+    ];
+    menuLinks.value 
+      = menuLinks.value
+        .filter((link) => link.name !== 'Déconnexion');
+  }
+}
 
 const openMenu = () => {
   showMenu.value = true;

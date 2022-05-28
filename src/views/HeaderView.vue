@@ -17,6 +17,6 @@ header {
   left: 0;
   z-index: $font-fixed;
   width: 100%;
-  background: transparent;
+  background: $color-body;
 }
 </style>
