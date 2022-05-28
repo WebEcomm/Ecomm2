@@ -53,7 +53,9 @@
           <!-- REDIRECT TO SIGN UP -->
           <div class="sign">
             Don't have an account?
-            <span class="sign--link">Sign up</span>
+            <router-link :to="{name: 'register'}" class="sign--link link">
+              Sign up
+            </router-link>
           </div>
         </div>
       </form>
@@ -62,7 +64,7 @@
       class="flash__msg" 
       :label="'Oh snap!'"
       :msg="msgError"
-      @on-close="closeFlashMesssage"
+      :flag="'ERROR_FLAG'"
       v-if="msgError" 
     />
   </section>
@@ -92,8 +94,17 @@ watch(user, (currentUser) => {
   }
 });
 
+watch(msgError, (currentValue) => {
+  if (currentValue) {
+    closeFlashMesssage();
+  }
+})
+
 const closeFlashMesssage = () => { 
-  msgError.value = '';
+  let delay = 3000;
+  setTimeout(() => {
+    msgError.value = '';
+  }, delay)
 }
 
 const validateInput = () => {
@@ -190,7 +201,7 @@ const login = () => {
         padding: $size-m;
         border-radius: $size-s;
         font-size: $size-m;
-        color: $color-title;
+        color: $color-white;
         background-color: $color-primary;
       }
       .sign {

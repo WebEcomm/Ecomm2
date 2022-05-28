@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="flash container">
+    <div :class="`flash container ${sty.className}`">
       <svg class="icon" version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="1280.000000pt" height="1238.000000pt" viewBox="0 0 1280.000000 1238.000000"
  preserveAspectRatio="xMidYMid meet">
@@ -92,14 +92,28 @@ fill="#000000" stroke="none">
         </span>
       </div>
       <button class="btn" @click="emit('onClose')">
-        x
+        {{ sty.icon }}
       </button>
     </div>
   </section>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, onMounted, ref } from 'vue';
+var sty = ref({
+  icon: '',
+  className: ''
+});
+
+onMounted(() => {
+  props.flag === 'ERROR_FLAG'
+    ? sty.value = { icon: '✘', className: 'flash--warning'}
+    : props.flag === 'INFO_FLAG'
+      ? sty.value = { icon: '?', className: 'flash--info'}
+      : props.flag === 'SUCCESS_FLAG'
+        ? sty.value = { icon: '✓', className: 'flash--success'}
+        : sty.value = { icon: '', className: ''}
+})
 
 const props = defineProps({
   label: {
@@ -110,6 +124,15 @@ const props = defineProps({
     type: String,
     required: true
   },
+  flag: {
+    type: String,
+    required: true,
+    validator: (value) => [
+      'ERROR_FLAG', 
+      'INFO_FLAG', 
+      'SUCCESS_FLAG'
+    ].includes(value.toUpperCase())
+  }
 });
 
 const emit = defineEmits(['onClose']);
@@ -120,15 +143,13 @@ const emit = defineEmits(['onClose']);
 
 .flash {
   position: relative;
-  color: $color-title;
-  background-color: $color-warning;
   display: flex;
   align-items: center;
   border-radius: $size-l;
+  color: $color-white;
   .icon {
     width: 90px;
     height: auto;
-    fill: $color-warning-alt;
   }
   .msg {
     display: grid;
@@ -142,8 +163,22 @@ const emit = defineEmits(['onClose']);
     top: -25%;
     left: .5%;
     font-size: $size-m;
-    color: $color-title;
-    background-color: $color-warning-alt;
+    color: $color-white;
+  }
+  &--info {
+    background-color: $color-info;
+    .icon { fill: $color-info-alt; }
+    .btn { background-color: $color-info-alt; }
+  }
+  &--success {
+    background-color: $color-success;
+    .icon { fill: $color-success-alt; }
+    .btn { background-color: $color-success-alt; }
+  }
+  &--warning {
+    background-color: $color-warning;
+    .icon { fill: $color-warning-alt; }
+    .btn { background-color: $color-warning-alt; }
   }
 }
 </style>

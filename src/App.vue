@@ -38,7 +38,7 @@ html {
     h1,h2,h3 { font-weight: $font-medium; color: $color-title; }
     ul { list-style: none; }
     a { text-decoration: none; } /* on utilise <router-link class="link"> pour les liens */
-    .link { @extend a; }
+    .link { @extend a; cursor: pointer; }
     button { @extend input; cursor: pointer; }
     input { border: none; outline: none; background: none; }
     img { max-width: 100%; height: auto; object-fit: cover; }

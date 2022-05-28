@@ -41,8 +41,8 @@ export default {
         displayName: username
       }).then(() => {
         // Profile updated!
-        alert('Profile updated!');
-        dispatch('setUserProfile', user)
+        console.log('Profile updated!');
+        dispatch('isLoggedUser');
         // ...
       }).catch((error) => {
         // An error occurred
@@ -62,14 +62,15 @@ export default {
       });
     },
     registerUser ({dispatch}, {name, email, password}) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          dispatch('updateUserProfile', name);
-        })
-        .catch((error) => {
-          const errorMessage = error.message;
-          console.log(errorMessage);
-        });
+      return new Promise((resolve, reject ) => {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            dispatch('updateUserProfile', name);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+      });
     },
     isLoggedUser ({state, dispatch}) {
       onAuthStateChanged(auth, (user) => {
