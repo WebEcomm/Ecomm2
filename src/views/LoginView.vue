@@ -66,6 +66,7 @@
       :msg="msgError"
       :flag="'ERROR_FLAG'"
       v-if="msgError" 
+      @on-close="closeFlashMesssage"
     />
   </section>
 </template>
@@ -94,17 +95,8 @@ watch(user, (currentUser) => {
   }
 });
 
-watch(msgError, (currentValue) => {
-  if (currentValue) {
-    closeFlashMesssage();
-  }
-})
-
 const closeFlashMesssage = () => { 
-  let delay = 3000;
-  setTimeout(() => {
-    msgError.value = '';
-  }, delay)
+  msgError.value = '';
 }
 
 const validateInput = () => {
@@ -219,7 +211,7 @@ const login = () => {
 }
 .flash__msg {
   position: absolute;
-  bottom: 0;
+  bottom: $size-xl;
   left: 0;
   width: 100%;
 }

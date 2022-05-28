@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <div>
     <div :class="`flash container ${sty.className}`">
-      <svg class="icon" version="1.0" xmlns="http://www.w3.org/2000/svg"
+      <svg class="img" version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="1280.000000pt" height="1238.000000pt" viewBox="0 0 1280.000000 1238.000000"
  preserveAspectRatio="xMidYMid meet">
 <metadata>
@@ -15,7 +15,7 @@ fill="#000000" stroke="none">
 46 -146 137 -258 344 -427 389 -315 645 -561 842 -808 31 -38 124 -171 207
 -294 149 -219 317 -446 325 -437 6 6 -832 2167 -878 2263 -105 221 -317 334
 -520 278z"/>
-<path class="icon" d="M5964 11391 c-91 -42 -119 -118 -118 -326 1 -201 23 -343 134 -855
+<path class="img" d="M5964 11391 c-91 -42 -119 -118 -118 -326 1 -201 23 -343 134 -855
 67 -308 97 -460 115 -578 53 -355 34 -558 -61 -642 -77 -67 -256 -89 -410 -50
 -159 41 -403 179 -583 331 l-73 62 63 -81 c206 -261 296 -505 259 -701 -20
 -106 -96 -223 -169 -260 -123 -63 -301 -14 -543 148 -169 114 -310 232 -602
@@ -91,11 +91,11 @@ fill="#000000" stroke="none">
           {{ props.msg }}
         </span>
       </div>
-      <button class="btn" @click="emit('onClose')">
+      <div class="icon">
         {{ sty.icon }}
-      </button>
+      </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup>
@@ -106,6 +106,8 @@ var sty = ref({
 });
 
 onMounted(() => {
+  closeFlashMesssage();
+
   props.flag === 'ERROR_FLAG'
     ? sty.value = { icon: '✘', className: 'flash--warning'}
     : props.flag === 'INFO_FLAG'
@@ -114,6 +116,13 @@ onMounted(() => {
         ? sty.value = { icon: '✓', className: 'flash--success'}
         : sty.value = { icon: '', className: ''}
 })
+
+const closeFlashMesssage = () => { 
+  let delay = 3000;
+  setTimeout(() => {
+    emit('onClose');
+  }, delay)
+}
 
 const props = defineProps({
   label: {
@@ -142,12 +151,12 @@ const emit = defineEmits(['onClose']);
 @use '@/assets/styles' as *;
 
 .flash {
+  @include shape-box(auto, $size-biggest, $size-l);
   position: relative;
   display: flex;
   align-items: center;
-  border-radius: $size-l;
   color: $color-white;
-  .icon {
+  .img {
     width: 90px;
     height: auto;
   }
@@ -157,9 +166,12 @@ const emit = defineEmits(['onClose']);
     .label { font-size: $size-l; }
     .description { font-size: $size-s; }
   }
-  .btn {
+  .icon {
     @include shape-circle($size-xxl);
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: -25%;
     left: .5%;
     font-size: $size-m;
@@ -167,18 +179,18 @@ const emit = defineEmits(['onClose']);
   }
   &--info {
     background-color: $color-info;
-    .icon { fill: $color-info-alt; }
-    .btn { background-color: $color-info-alt; }
+    .img { fill: $color-info-alt; }
+    .icon { background-color: $color-info-alt; }
   }
   &--success {
     background-color: $color-success;
-    .icon { fill: $color-success-alt; }
-    .btn { background-color: $color-success-alt; }
+    .img { fill: $color-success-alt; }
+    .icon { background-color: $color-success-alt; }
   }
   &--warning {
     background-color: $color-warning;
-    .icon { fill: $color-warning-alt; }
-    .btn { background-color: $color-warning-alt; }
+    .img { fill: $color-warning-alt; }
+    .icon { background-color: $color-warning-alt; }
   }
 }
 </style>
