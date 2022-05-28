@@ -233,9 +233,10 @@ const register = () => {
   }
 }
 .flash__msg {
-  position: absolute;
+  position: fixed;
   bottom: $size-xl;
   left: 0;
   width: 100%;
+  z-index: $font-tooltip;
 }
 </style>

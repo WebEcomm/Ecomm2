@@ -109,12 +109,14 @@ onMounted(() => {
   closeFlashMesssage();
 
   props.flag === 'ERROR_FLAG'
-    ? sty.value = { icon: '✘', className: 'flash--warning'}
-    : props.flag === 'INFO_FLAG'
-      ? sty.value = { icon: '?', className: 'flash--info'}
-      : props.flag === 'SUCCESS_FLAG'
-        ? sty.value = { icon: '✓', className: 'flash--success'}
-        : sty.value = { icon: '', className: ''}
+    ? sty.value = { icon: '✘', className: 'flash--error'}
+      : props.flag === 'WARNING_FLAG'
+      ? sty.value = { icon: '!', className: 'flash--warning'}
+      : props.flag === 'INFO_FLAG'
+        ? sty.value = { icon: '¡', className: 'flash--info'}
+        : props.flag === 'SUCCESS_FLAG'
+          ? sty.value = { icon: '✓', className: 'flash--success'}
+          : sty.value = { icon: '', className: ''}
 })
 
 const closeFlashMesssage = () => { 
@@ -137,7 +139,8 @@ const props = defineProps({
     type: String,
     required: true,
     validator: (value) => [
-      'ERROR_FLAG', 
+      'ERROR_FLAG',
+      'WARNING_FLAG', 
       'INFO_FLAG', 
       'SUCCESS_FLAG'
     ].includes(value.toUpperCase())
@@ -186,6 +189,11 @@ const emit = defineEmits(['onClose']);
     background-color: $color-success;
     .img { fill: $color-success-alt; }
     .icon { background-color: $color-success-alt; }
+  }
+  &--error {
+    background-color: $color-error;
+    .img { fill: $color-error-alt; }
+    .icon { background-color: $color-error-alt; }
   }
   &--warning {
     background-color: $color-warning;

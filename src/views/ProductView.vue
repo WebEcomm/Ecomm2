@@ -10,19 +10,52 @@
         <product-card-item 
         v-for="product in products" :key="product.id"
         :item="product"
+        @update-cart="updateCart"
         />
       </div>
     </div>
+     <flash-message 
+      class="flash__msg" 
+      :label="msgFlash.label"
+      :msg="msgFlash.msg"
+      :flag="msgFlash.flag"
+      v-if="msgFlash.msg" 
+      @on-close="closeFlashMesssage"
+    />
   </section>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import { ProductCardItem } from '@/components';
+import { FlashMessage, ProductCardItem } from '@/components';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const store = useStore();
 const products = computed(() => store.getters['product/getProducts']);
+const user = computed(() => store.getters['user/getUser']);
+
+const msgFlash = ref({
+  label: '',
+  msg: '',
+  flag: ''
+});
+
+
+const closeFlashMesssage = () => {
+  msgFlash.value = {label: '', msg: '', flag: ''};
+  if (!user.value) {
+    router.push({name: 'login'});
+  }
+}
+
+const updateCart = (value) => {
+  user.value 
+    ? msgFlash.value = {label: 'Hi there!', msg: value, flag: 'INFO_FLAG'}
+    : msgFlash.value = {label: 'Warning!', msg: value, flag: 'WARNING_FLAG'}
+  console.log(msgFlash.value)
+}
 </script>
 
 <style scoped lang="scss">
@@ -49,5 +82,12 @@ const products = computed(() => store.getters['product/getProducts']);
       }
     }
   }
+  .flash__msg {
+  position: fixed;
+  bottom: $size-xl;
+  left: 0;
+  width: 100%;
+  z-index: $font-tooltip;
+}
 }
 </style>

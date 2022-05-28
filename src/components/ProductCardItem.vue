@@ -28,8 +28,8 @@
 </template>
 
 <script setup>
-import { computed, defineProps } from 'vue';
-import { useLink, useRouter } from 'vue-router';
+import { computed, defineProps, defineEmits } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 const props = defineProps({
@@ -39,30 +39,26 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits(['updateCart']);
+
 const store = useStore();
 const router = useRouter();
 
 const updateNote = (newNote) => {
-  store.dispatch('product/setNote', {productId: props.item.id, rate: newNote})
+  store.dispatch('product/setNote', {productId: props.item.id, rate: newNote});
 }
 
 const showProduct = () => {
-  const l = useLink({name: 'product', params: {id: props.item.id}})
-  console.log(l.route)
-  const r = useRouter();
-  r.push({name: 'home', params: {id: props.item.id}})
+  router.push({name: 'product', params: {id: props.item.id}})
 }
 
 const addToCart = () => {
   const user = computed(() => store.getters['user/getUser']);
-  if (user.value) {
-    let msg = `${user.value.name}: product {${props.item.title}} add to your cart!`;
-    alert(msg);
-  } else {
-    let msg = 'Please sign in before !'
-    alert(msg);
-    router.push({name: 'login'});
-  }
+  let msg = '';
+  user.value
+    ? msg = `${user.value.name}: product {${props.item.title}} add to your cart!`
+    : msg = 'Please sign in before !'
+  emit('updateCart', msg);
 }
 </script>
 
