@@ -1,6 +1,6 @@
 import { collection, doc, getDocs, updateDoc, where, query, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db, getFileURL } from '@/firebase';
-import { SET_NOTE } from '@/store/mutation-types';
+import { SET_NOTE, PUT_IN_CART, REMOVE_FROM_CART } from '@/store/mutation-types';
 
 
 export default {
@@ -8,6 +8,7 @@ export default {
   state: {
     currentProduct: {},
     products: [],
+	cart: [],
   },
   getters: {
     getProducts(state) {
@@ -15,6 +16,19 @@ export default {
     },
     getCurrentProduct(state) {
       return state.currentProduct;
+    },
+	getProductsIdInCart(state) {
+      return state.cart;
+    },
+    getProductsInCart(state) {
+      let cartEntire = [];
+      state.cart.map((element) => {
+        console.log('element '+ element.productId);
+        let newProduct = state.products.find((product) => 
+         element.productId == product.id);
+            cartEntire.push(newProduct);
+      });
+      return cartEntire;
     }
   },
   mutations: {
@@ -26,6 +40,14 @@ export default {
     },
     [SET_NOTE] (state, note) {
       state.currentProduct.rate = note;
+    },
+	[PUT_IN_CART](state, id){
+      /* console.log(id); */
+      state.cart.push(id);
+      /* console.log(state.cart); */
+    },
+    [REMOVE_FROM_CART](state, id){
+      state.cart.splice(id, 1);
     }
   },
   actions: {
@@ -37,6 +59,10 @@ export default {
         }
       })
       commit('setCurrentProduct', productFound);
+    },
+	addToCart(state, productId){
+      console.log(productId);
+      state.commit("PUT_IN_CART", productId);
     },
     async setNote ({dispatch, commit}, {productId, rate}) {
       await updateDoc(doc(db, 'product', productId), {

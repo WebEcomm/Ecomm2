@@ -6,7 +6,8 @@ import {
   ProductView, 
   RegisterView, 
   LoginView, 
-  SetupProfile 
+  SetupProfile,
+  CartView,   
 } from '@/views';
 
 const routes = [
@@ -29,6 +30,11 @@ const routes = [
     path: "/products",
     name: "products",
     component: ProductView,
+  },
+  {
+    path: "/cart",
+    name: "cart",
+    component: CartView,
   },
   // { 
   //   name: 'movie',

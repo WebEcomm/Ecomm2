@@ -1,4 +1,4 @@
-<template>
+.<template>
   <article class="card">
     <div class="circle" :style="{backgroundColor: props.item.tintColor}"></div>
     <img 
@@ -7,30 +7,18 @@
       class="img" 
       @click="showProduct"
     />
-    <div class="note">
-      <span 
-        v-for="i in 5" :key="i" 
-        :class="{'star': true, 'star--dark' : i > props.item.rate}" 
-        @click="updateNote(i)">
-        ⭐
-      </span>
-    </div>
     <div class="content">
       <div class="details">
         <h2 class="title">{{ props.item.title }}</h2>
         <span class="price">${{ props.item.price }}</span>
       </div>
-      <button class="btn" @click="addToCart">
-        <i class='bx bx-shopping-bag' ></i>
-      </button>
     </div>
   </article>
 </template>
 
 <script setup>
-import { computed, defineProps, defineEmits } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { defineProps } from 'vue';
+import { useLink, useRouter } from 'vue-router';
 
 const props = defineProps({
   item: {
@@ -38,28 +26,12 @@ const props = defineProps({
     required: true
   }
 });
-
-const emit = defineEmits(['updateCart']);
-
-const store = useStore();
-const router = useRouter();
-
-const updateNote = (newNote) => {
-  store.dispatch('product/setNote', {productId: props.item.id, rate: newNote});
-}
-
+console.log(props)
 const showProduct = () => {
-  router.push({name: 'product', params: {id: props.item.id}})
-}
-
-const addToCart = () => {
-  const user = computed(() => store.getters['user/getUser']);
-  let msg = '';
-  user.value
-    ? msg = `${user.value.name}: product {${props.item.title}} add to your cart!`
-    & store.dispatch('product/addToCart', {productId : props.item.id})
-    : msg = 'Please sign in before !'
-  emit('updateCart', msg);
+  const l = useLink({name: 'product', params: {id: props.item.id}})
+  console.log(l.route)
+  const r = useRouter();
+  r.push({name: 'home', params: {id: props.item.id}})
 }
 </script>
 
