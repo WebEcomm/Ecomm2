@@ -27,13 +27,13 @@ $info-alt: #0F4C75;
 $validated: #50c467;
 
 // Dark theme
-$title: hsl($hue, 12%, 95%);
-$text: hsl($hue, 12%, 75%);
-$text-light: hsl($hue, 12%, 65%);
-$shadow-light: hsl($hue, 8%, 12%);
-$shadow: hsla($hue, 8%, 20%, 1);
-$body: hsl($hue, 10%, 16%);
-$body-alt: hsl($hue, 8%, 20%);
+// $title: hsl($hue, 12%, 95%);
+// $text: hsl($hue, 12%, 75%);
+// $text-light: hsl($hue, 12%, 65%);
+// $shadow-light: hsl($hue, 8%, 12%);
+// $shadow: hsla($hue, 8%, 20%, 1);
+// $body: hsl($hue, 10%, 16%);
+// $body-alt: hsl($hue, 8%, 20%);
 
 @mixin neumorphism-out {
   box-shadow: -6px -6px 16px $shadow-light,

@@ -49,6 +49,9 @@ html {
     .container { 
       max-width: $size-max-width;
       margin: 0 $size-xl;
+      @include media-for-tablet-landscape-up {
+        margin: 0 auto;
+      }
     }
   }
 }

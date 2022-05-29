@@ -1,11 +1,32 @@
 <template>
-  <header>
+  <header v-show="showNavbar">
     <nav-bar />
   </header>
 </template>
 
 <script setup>
 import { NavBar } from '@/components';
+import { computed, onMounted, ref, watch } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const user = computed(() => store.getters['user/getUser']);
+
+const showNavbar = ref(false);
+
+onMounted(() => {
+  checkUser(user.value);
+})
+
+watch(user, (currentUser) => {
+  checkUser(currentUser);
+})
+
+const checkUser = (user) => {
+  user
+    ? showNavbar.value = true
+    : showNavbar.value = false
+}
 </script>
 
 <style lang="scss">

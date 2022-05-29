@@ -7,7 +7,7 @@
         alt="logo"
         class="img"
       />
-      <span>Headphone</span>
+      <span class="title">Headphone</span>
     </router-link>
     <!-- MENU -->
     <nav-menu 
@@ -20,7 +20,7 @@
       @click="openMenu"
       class="toggle"
     >
-      <i class='bx bx-grid-alt' ></i>
+      <i class='bx bx-shopping-bag' ></i>
     </button>
   </nav>
 </template>
@@ -31,10 +31,11 @@ import { useStore } from 'vuex';
 import { NavMenu } from './';
 
 const menuLinks = ref([
-  { id: 1, name: 'Home', path: '/' },
-  { id: 2, name: 'Specs', path: '/specs' },
-  { id: 3, name: 'Case', path: '/cases' },
-  { id: 4, name: 'Products', path: '/products' },
+  { id: 1, name: 'Home', path: '/', icon: 'home-alt' },
+  { id: 2, name: 'Products', path: '/products', icon: 'grid-alt' },
+  { id: 3, name: 'Favourite', path: '/favourite', icon: 'heart' },
+  { id: 4, name: 'Cart', path: '/cart', icon: 'shopping-bag' },
+  { id: 4, name: 'Profile', path: '/profile', icon: 'user' },
 ]);
 
 const store = useStore();
@@ -57,7 +58,7 @@ const showAuthLink = (currentUser) => {
     //
     menuLinks.value = [
       ...menuLinks.value,
-      {id: '5', name: 'Déconnexion', path: './'}
+      // {id: '5', name: 'Déconnexion', path: './'}
     ];
     menuLinks.value 
       = menuLinks.value
@@ -66,7 +67,7 @@ const showAuthLink = (currentUser) => {
     //
     menuLinks.value = [
       ...menuLinks.value,
-      {id: '5', name: 'Connexion', path: './connexion/login'}
+      // {id: '5', name: 'Connexion', path: './connexion/login'}
     ];
     menuLinks.value 
       = menuLinks.value
@@ -74,9 +75,9 @@ const showAuthLink = (currentUser) => {
   }
 }
 
-const openMenu = () => {
-  showMenu.value = true;
-}
+// const openMenu = () => {
+//   showMenu.value = true;
+// }
 
 const closeMenu = () => {
   showMenu.value = false;
@@ -98,6 +99,7 @@ nav {
     align-items: center;
     column-gap: $size-xxs;
     width: $size-xl; 
+    .title { color: $color-title; }
   }
   .toggle { font-size: $size-xl; color: $color-text; }
 }

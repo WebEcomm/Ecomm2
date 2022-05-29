@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { NotFound } from '@/components';
 import { 
-  AuthView,
+  AuthView, 
   HomeView, 
   ProductView, 
   RegisterView, 
-  LoginView,
-  SetupProfile
+  LoginView, 
+  SetupProfile 
 } from '@/views';
 
 const routes = [
