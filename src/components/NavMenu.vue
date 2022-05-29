@@ -8,7 +8,10 @@
         v-for="(link) in props.links" 
         @click="handleClick(link)"
       >
-        <router-link :to="link.path" class="link">{{ link.name }}</router-link>
+        <router-link :to="link.path" class="link">
+          <i class="bx bx-home"></i>
+          <span class="name">{{ link.name }}</span>
+        </router-link>
       </li>
     </ul>
     <!-- BOUTON CLOSE -->

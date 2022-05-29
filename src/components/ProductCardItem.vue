@@ -92,7 +92,8 @@ const addToCart = () => {
     }
   }
   .img {
-    width: 120px;
+    @include shape-square(150px);
+    object-fit: contain;
     justify-self: center;
     transition: .3s;
     z-index: $font-tooltip;

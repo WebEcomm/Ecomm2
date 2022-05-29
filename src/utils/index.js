@@ -13,9 +13,15 @@ const validatePassword = (password) => {
   return re.test(password);
 }
 
+const validateBirthdate = (birthdate) => {
+  let re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
+  return re.test(birthdate);
+}
+
 
 export {
   validateEmail,
   validateName,
   validatePassword,
+  validateBirthdate,
 };

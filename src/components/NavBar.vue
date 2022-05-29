@@ -66,7 +66,7 @@ const showAuthLink = (currentUser) => {
     //
     menuLinks.value = [
       ...menuLinks.value,
-      {id: '5', name: 'Connexion', path: './login'}
+      {id: '5', name: 'Connexion', path: './connexion/login'}
     ];
     menuLinks.value 
       = menuLinks.value

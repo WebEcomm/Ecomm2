@@ -8,8 +8,8 @@
       />
       <form class="form"  @submit.prevent="register">
         <div class="header">
-          <h2 class="title">Welcome back!</h2>
-          <span class="subtitle">Login with your data that you entered during your registration.</span>
+          <h2 class="title">Let's get started!</h2>
+          <span class="subtitle">Please enter your valid data in order to create an account.</span>
         </div>
         <div class="content">
           <!-- NAME FIELD -->
@@ -63,6 +63,12 @@
               {{ passwordError }}
             </span>
           </div>
+          <div class="terms">
+            <input type="checkbox" v-model="termsChecked" />
+            <span class="description">
+              I agree with the <span class="link">Terms of services</span> & privacy.
+            </span>
+          </div>
         </div>
         <div class="footer">
           <!-- LOGIN BUTTON -->
@@ -79,9 +85,9 @@
     </div>
     <flash-message 
       class="flash__msg" 
-      :label="'Oh snap!'"
+      :label="termsChecked ? 'Oh snap!' : 'Warning!'"
       :msg="msgError"
-      :flag="'ERROR_FLAG'"
+      :flag="termsChecked ? 'ERROR_FLAG' : 'WARNING_FLAG'"
       v-if="msgError" 
       @on-close="closeFlashMesssage"
     />
@@ -105,6 +111,7 @@ const emailError = ref('');
 const password = ref('');
 const passwordError = ref('');
 const msgError = ref('');
+const termsChecked = ref(false);
 
 const user = computed(() => store.getters['user/getUser']);
 
@@ -114,19 +121,23 @@ watch(user, (currentUser) => {
   }
 });
 
+watch(termsChecked, (terms) => {
+  console.log(terms);
+});
+
 const closeFlashMesssage = () => { 
   msgError.value = '';
 }
 
 const validateInput = () => {
-  !validateName(name.value)
-    ? nameError.value = 'Name is invalid'
+  !validateName(name.value.trim())
+    ? nameError.value = name.value ? 'Enter a valid name' : 'Name is required'
     : nameError.value = ''
-  !validateEmail(email.value)
-    ? emailError.value = 'Email is invalid'
+  !validateEmail(email.value.trim())
+    ? emailError.value = email.value ? 'Enter a valid email address' : 'Email is required'
     : emailError.value = ''
-  !validatePassword(password.value)
-    ? passwordError.value = 'Password size must be at least 6'
+  !validatePassword(password.value.trim())
+    ? passwordError.value = password.value ? 'Password size must be at least 6' : 'Password is required'
     : passwordError.value = ''
 }
 
@@ -138,14 +149,18 @@ const register = () => {
   validateInput();
 
   if (!nameError.value && !emailError.value && !passwordError.value) {
-    store.dispatch('user/registerUser', {
-      name: name.value,
-      email: email.value,
-      password: password.value
-    }).catch((error) => {
-      msgError.value = 'An account is already registered with your email adress';
-      console.log(error.code);
-    })
+    if (termsChecked.value) {
+      store.dispatch('user/registerUser', {
+        name: name.value,
+        email: email.value,
+        password: password.value
+      }).catch((error) => {
+        msgError.value = 'An account is already registered with your email address';
+        console.log(error.code);
+      })
+    } else {
+      msgError.value = 'You must agree to our terms of services and privacy policy'
+    }
   }
 }
 </script>
@@ -182,6 +197,7 @@ const register = () => {
           padding: $size-m;
           border-radius: $size-s;
           background-color: $color-body-alt;
+          
           .icon { 
             display: flex;
             justify-content: center;
@@ -191,17 +207,27 @@ const register = () => {
           }
           .input {
             width: 100%;
-            font-size: $size-l;
+            font-size: $size-m;
             color: $color-text;
           }
         }
       }
       .warning {
-        .entry { border: 1px solid red; }
+        .entry { border: 1px solid $color-error; }
         .msg { 
           margin-left: $size-m;
           font-size: $size-s;
-          color: $color-warning;
+          color: $color-error;
+        }
+      }
+      .terms {
+        display: flex;
+        align-items: center;
+        column-gap: $size-s;
+        padding: 0 $size-m;
+        .description { 
+          font-size: $size-s; 
+          .link { color: $color-primary; }
         }
       }
     }

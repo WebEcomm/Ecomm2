@@ -1,6 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { NotFound } from '@/components';
-import { HomeView, ProductView, RegisterView, LoginView } from '@/views';
+import { 
+  AuthView,
+  HomeView, 
+  ProductView, 
+  RegisterView, 
+  LoginView,
+  SetupProfile
+} from '@/views';
 
 const routes = [
   {
@@ -9,14 +16,14 @@ const routes = [
     component: HomeView,
   },
   {
-    path:"/register",
-    name : "register",
-    component: RegisterView,
-  },
-  {
-    path:"/login",
-    name : "login",
-    component: LoginView,
+    path:"/connexion",
+    name : "connexion",
+    component: AuthView,
+    children: [
+      { name: 'login', path: '/login', component: LoginView },
+      { name: 'register', path: '/register', component: RegisterView },
+      { name: 'setupProfile', path: '/profile', component: SetupProfile }
+    ],
   },
   {
     path: "/products",
