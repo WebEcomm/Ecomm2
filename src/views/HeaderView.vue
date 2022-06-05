@@ -25,7 +25,7 @@ watch(user, (currentUser) => {
 const checkUser = (user) => {
   user
     ? showNavbar.value = true
-    : showNavbar.value = false
+    : showNavbar.value = true
 }
 </script>
 

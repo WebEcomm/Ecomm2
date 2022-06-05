@@ -58,26 +58,42 @@ const showAuthLink = (currentUser) => {
     //
     menuLinks.value = [
       ...menuLinks.value,
-      // {id: '5', name: 'Déconnexion', path: './'}
+      { id: '3', name: 'Favourite', path: '/favourite', icon: 'heart' },
+      { id: '4', name: 'Cart', path: '/cart', icon: 'shopping-bag' },
+      { id: '4', name: 'Profile', path: '/profile', icon: 'user' },
+      {id: '5', name: 'Déconnexion', path: './'}
     ];
     menuLinks.value 
       = menuLinks.value
-        .filter((link) => link.name !== 'Connexion');
+        .filter(MenuConnecte);
   } else {
     //
     menuLinks.value = [
       ...menuLinks.value,
-      // {id: '5', name: 'Connexion', path: './connexion/login'}
+       {id: '5', name: 'Connexion', path: './connexion/login'},
+       {id: '6', name: 'Register', path: './connexion/register'}
     ];
     menuLinks.value 
       = menuLinks.value
-        .filter((link) => link.name !== 'Déconnexion');
+        .filter(MenuPasConnecte);
   }
 }
 
-// const openMenu = () => {
-//   showMenu.value = true;
-// }
+const MenuPasConnecte = (link) => {
+  if (link.name != 'Déconnexion' & link.name !='Cart' & link.name !='Favourite' & link.name != 'Profile') {
+    return link.name; 
+  }
+}
+
+const MenuConnecte = (link) => {
+   if ( link.name !='Connexion' & link.name != 'Register') {
+    return link.name; 
+  }
+}
+
+ const openMenu = () => {
+  showMenu.value = true;
+ }
 
 const closeMenu = () => {
   showMenu.value = false;
