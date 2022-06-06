@@ -9,12 +9,6 @@
         <p class="description">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam esse tenetur cumque itaque unde velit autem facere, quia aliquid eos.
         </p>
-        <button class="btn">
-          <span class="label">Explore</span>
-          <div class="icon">
-            <i class='bx bx-right-arrow-alt'></i>
-          </div>
-        </button>
       </div>
       <!-- SOCIAL -->
       <div class="social">

@@ -50,6 +50,7 @@ onBeforeMount(() => {
 
 watch(user, (currentUser) => {
   showAuthLink(currentUser);
+  
 })
 
 const showAuthLink = (currentUser) => {
@@ -70,8 +71,8 @@ const showAuthLink = (currentUser) => {
     //
     menuLinks.value = [
       ...menuLinks.value,
-       {id: '5', name: 'Connexion', path: './connexion/login'},
-       {id: '6', name: 'Register', path: './connexion/register'}
+       {id: '5', name: 'Connexion', path: './connexion/login', icon: 'user'},
+       {id: '6', name: 'Register', path: './connexion/register', icon: 'user'}
     ];
     menuLinks.value 
       = menuLinks.value
