@@ -30,6 +30,10 @@ const idP = store.getters['product/getProductsIdInCart'];
 
 const cart = computed(() => store.getters['product/getProductsInCart'] );
 
+
+const totalCost = computed(() => store.getters['product/getTotalCost']);
+
+
 /* const createCart = () => {
 
    console.log('CreateCart' + idP); 

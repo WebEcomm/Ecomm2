@@ -42,7 +42,6 @@ const msgFlash = ref({
   flag: ''
 });
 
-
 const closeFlashMesssage = () => {
   msgFlash.value = {label: '', msg: '', flag: ''};
   if (!user.value) {

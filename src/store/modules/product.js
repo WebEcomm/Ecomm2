@@ -29,6 +29,14 @@ export default {
             cartEntire.push(newProduct);
       });
       return cartEntire;
+    },
+    getTotalCost(state, getters) {
+       let totalCost = 0.0; 
+      let cartEntire = getters.getProductsInCart; 
+      cartEntire.map((item) => {
+      totalCost += item.price;
+      })
+    return totalCost; 
     }
   },
   mutations: {
