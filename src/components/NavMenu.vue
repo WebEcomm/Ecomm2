@@ -1,5 +1,5 @@
 <template>
-  <div :class="{menu: true, show: true}">
+  <div :class="{menu: true}">
     <!-- LISTE DE LIENS -->
     <ul class="list">
       <li 
@@ -68,76 +68,62 @@ const activeLink = () => {
 @use '@/assets/styles' as *;
 
 .menu {
-  position: fixed;
-  bottom: -100%;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: $size-m 0;
-  background-color: $color-body;
+  @include media-for-phone-only {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    align-content: center;
+    box-shadow: $color-header-shadow;
+    @include shape-box(100%, $size-navbar-height, $fill: $color-body);
+    border-radius: $size-l $size-l 0 0;
+    padding: 0 $size-m;
+    transition: .4s;
+  }
   @include media-for-tablet-landscape-up {
-    position: initial;
-    justify-content: flex-end;
-    background: none;
+    width: 100%;
   }
   .list {
-    @include media-for-phone-only {
-      width: 100%;
-    }
-    @include media-for-tablet-portrait-up {
-      max-width: 600px;
-      width: 65%;
-    }
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    row-gap: $size-m;
+    @include media-for-tablet-portrait-up {
+      justify-content: center;
+      column-gap: 2*$size-xl;
+    }
+    @include media-for-tablet-landscape-up {
+      justify-content: flex-end;
+      margin-right: $size-m;
+    }
     .item {
       .link {
-        @include shape-square($size-bigger);
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
+        row-gap: $size-xxs;
+        font-weight: $font-medium;
         color: $color-title;
-        font-weight: $font-semi-bold;
+        .icon { font-size: $size-xl; }
+        .name { font-size: $size-s; }
         @include media-for-tablet-landscape-up {
-          @include shape-square(auto);
-          flex-direction: row;
+          .icon { display: none; }
+          .name { font-size: $size-m; }
         }
-        .icon { 
-          font-size: $size-xl;
-          @include media-for-tablet-landscape-up {
-            display: none;
+      }
+      .router-link-active {
+        position: relative;
+        color: $color-primary;
+        transition: .4s;
+        @include media-for-tablet-landscape-up {
+          position: relative;
+          &::before {
+            content: '';
+            position: absolute;
+            bottom: -$size-s;
+            @include shape-square($size-xs, 50%, $color-primary);
           }
-        }
-        .name {
-          // visibility: hidden; 
-          font-size: $size-s; 
-          @include media-for-tablet-landscape-up {
-            visibility: visible; 
-            font-size: $size-m; 
-          }
-        }
-        // @include color-gradient;
-        &:hover {
-          background: $color-white;
-          background-clip: text;
-          -webkit-background-clip: text;
         }
       }
     }
   }
-  .close {
-    position: absolute;
-    top: $size-m;
-    right: $size-m;
-    font-size: $size-xl;
-    color: $color-text;
-    &:hover { color: $color-white; }
-  }
 }
-.show { bottom: 0; }
 </style>

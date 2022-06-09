@@ -12,40 +12,27 @@
           <span class="subtitle">Login with your data that you entered during your registration.</span>
         </div>
         <div class="content">
+          <!-- *** -->
           <!-- EMAIL FIELD -->
-          <div :class="{field: true, warning: emailError}">
-            <div class="entry">
-              <div class="icon">
-                <i class='bx bx-envelope '></i>
-              </div>
-              <input
-                type="text"
-                placeholder="Email address..."
-                v-model="email"
-                class="input"
-              />
-            </div>
-            <span class="msg" v-if="emailError">
-              {{ emailError }}
-            </span>
-          </div>
+          <form-input 
+            name="email"
+            type="text"
+            :value="userInfo.email"
+            label="Email adress..."
+            icon="envelope"
+            :value-error="userInfo.emailError"
+            @update:value="handleChange"
+          />
           <!-- PASSWORD FIELD -->
-          <div :class="{field: true, warning: passwordError}">
-            <div class="entry">
-              <div class="icon">
-                <i class='bx bx-lock '></i>
-              </div>
-              <input
-                type="text"
-                placeholder="Password..."
-                v-model="password"
-                class="input"
-              />
-            </div>
-            <span class="msg" v-if="passwordError">
-              {{ passwordError }}
-            </span>
-          </div>
+          <form-input 
+            name="password"
+            type="password"
+            :value="userInfo.password"
+            label="Password..."
+            icon="lock"
+            :value-error="userInfo.passwordError"
+            @update:value="handleChange"
+          />
         </div>
         <div class="footer">
           <!-- LOGIN BUTTON -->
@@ -62,50 +49,51 @@
     </div>
     <flash-message 
       class="flash__msg" 
-      :label="'Oh snap!'"
-      :msg="msgError"
-      :flag="'ERROR_FLAG'"
-      v-if="msgError" 
+      :label="msgFlash.label"
+      :msg="msgFlash.msg"
+      :flag="msgFlash.flag"
+      v-if="msgFlash.msg" 
       @on-close="closeFlashMesssage"
     />
   </section>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
-import { useStore } from "vuex";
+import { ref, reactive } from "vue";
 import { validateEmail, validatePassword } from '@/utils';
-import { FlashMessage} from '@/components';
-import { useRouter } from "vue-router";
+import { FlashMessage, FormInput } from '@/components';
+import { useStore } from "vuex";
 
 const store = useStore();
-const router = useRouter();
 
-const email = ref('');
-const emailError = ref('');
-const password = ref('');
-const passwordError = ref('');
-const msgError = ref('');
-
-const user = computed(() => store.getters['user/getUser']);
-
-watch(user, (currentUser) => {
-  if (currentUser) {
-    router.push({name: 'home'});
-  }
+const msgFlash = ref({
+  label: '',
+  msg: '',
+  flag: ''
 });
 
-const closeFlashMesssage = () => { 
-  msgError.value = '';
+const userInfo = reactive({
+  email: '',
+  emailError: '',
+  password: '',
+  passwordError: '',
+});
+
+const closeFlashMesssage = () => {
+  msgFlash.value = {label: '', msg: '', flag: ''};
+}
+
+const handleChange = ({name, value}) => {
+  userInfo[name] = value;
 }
 
 const validateInput = () => {
-  !validateEmail(email.value)
-    ? emailError.value = 'Email is invalid'
-    : emailError.value = ''
-  !validatePassword(password.value)
-    ? passwordError.value = 'Password size must be at least 6'
-    : passwordError.value = ''
+  !validateEmail(userInfo.email.trim())
+    ? userInfo.emailError = userInfo.email ? 'Enter a valid email address' : 'Email is required'
+    : userInfo.emailError = ''
+  !validatePassword(userInfo.password.trim())
+    ? userInfo.passwordError = userInfo.password ? 'Password size must be at least 6' : 'Password is required'
+    : userInfo.passwordError = ''
 }
 
 /**
@@ -115,12 +103,12 @@ const login = () => {
 
   validateInput();
 
-  if (!emailError.value && !passwordError.value) {
+  if (!userInfo.emailError && !userInfo.passwordError) {
     store.dispatch('user/loginUser', {
-      email: email.value,
-      password: password.value
+      email: userInfo.email,
+      password: userInfo.password
     }).catch((error) => {
-      msgError.value = 'Wrong email or password';
+      msgFlash.value = {label: 'Oh snap!', msg: 'Wrong email or password', flag: 'ERROR_FLAG'};
       console.log(error.code);
     })
   }
@@ -208,12 +196,5 @@ const login = () => {
       }
     }
   }
-}
-.flash__msg {
-  position: fixed;
-  bottom: $size-xl;
-  left: 0;
-  width: 100%;
-  z-index: $font-tooltip;
 }
 </style>

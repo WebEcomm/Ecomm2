@@ -15,6 +15,7 @@ $shadow-light: hsl($hue, 100%, 100%);
 $shadow: hsla($hue, 30%, 86%, 1);
 $body: hsl($hue, 24%, 94%);
 $body-alt: hsl($hue, 8%, 80%);
+$header-shadow: 0 -1px 12px hsla($hue, 53%, 15%, .15);
 $error: #f64c3c;
 $error-alt: #c91913;
 $warning: #ef8d32;
