@@ -1,4 +1,4 @@
-.<template>
+<template>
   <section>
     <div class="auth container">
       <img 
@@ -12,57 +12,37 @@
           <span class="subtitle">Please enter your valid data in order to create an account.</span>
         </div>
         <div class="content">
+          <!-- *** -->
           <!-- NAME FIELD -->
-          <div :class="{field: true, warning: nameError}">
-            <div class="entry">
-              <div class="icon">
-                <i class='bx bx-user '></i>
-              </div>
-              <input
-                type="text"
-                placeholder="Your name..."
-                v-model="name"
-                class="input"
-              />
-            </div>
-            <span class="msg" v-if="nameError">
-              {{ nameError }}
-            </span>
-          </div>
+          <form-input 
+            name="name"
+            type="text"
+            :value="userInfo.name"
+            label="Your name..."
+            icon="user"
+            :value-error="userInfo.nameError"
+            @update:value="handleChange"
+          />
           <!-- EMAIL FIELD -->
-          <div :class="{field: true, warning: emailError}">
-            <div class="entry">
-              <div class="icon">
-                <i class='bx bx-envelope '></i>
-              </div>
-              <input
-                type="text"
-                placeholder="Email address..."
-                v-model="email"
-                class="input"
-              />
-            </div>
-            <span class="msg" v-if="emailError">
-              {{ emailError }}
-            </span>
-          </div>
+          <form-input 
+            name="email"
+            type="text"
+            :value="userInfo.email"
+            label="Email adress..."
+            icon="envelope"
+            :value-error="userInfo.emailError"
+            @update:value="handleChange"
+          />
           <!-- PASSWORD FIELD -->
-          <div :class="{field: true, warning: passwordError}">
-            <div class="entry">
-              <div class="icon">
-                <i class='bx bx-lock '></i>
-              </div>
-              <input
-                type="text"
-                placeholder="Password..."
-                v-model="password"
-                class="input"
-              />
-            </div>
-            <span class="msg" v-if="passwordError">
-              {{ passwordError }}
-            </span>
-          </div>
+          <form-input 
+            name="password"
+            type="password"
+            :value="userInfo.password"
+            label="Password..."
+            icon="lock"
+            :value-error="userInfo.passwordError"
+            @update:value="handleChange"
+          />
           <div class="terms">
             <input type="checkbox" v-model="termsChecked" />
             <span class="description">
@@ -85,60 +65,59 @@
     </div>
     <flash-message 
       class="flash__msg" 
-      :label="termsChecked ? 'Oh snap!' : 'Warning!'"
-      :msg="msgError"
-      :flag="termsChecked ? 'ERROR_FLAG' : 'WARNING_FLAG'"
-      v-if="msgError" 
+      :label="msgFlash.label"
+      :msg="msgFlash.msg"
+      :flag="msgFlash.flag"
+      v-if="msgFlash.msg" 
       @on-close="closeFlashMesssage"
     />
   </section>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, reactive } from "vue";
 import { useStore } from "vuex";
 import { validateEmail, validatePassword, validateName } from '@/utils';
-import { FlashMessage} from '@/components';
-import { useRouter } from "vue-router";
+import { FlashMessage, FormInput } from '@/components';
 
 const store = useStore();
-const router = useRouter();
 
-const name = ref('');
-const nameError = ref('');
-const email = ref('');
-const emailError = ref('');
-const password = ref('');
-const passwordError = ref('');
-const msgError = ref('');
 const termsChecked = ref(false);
 
-const user = computed(() => store.getters['user/getUser']);
-
-watch(user, (currentUser) => {
-  if (currentUser) {
-    router.push({name: 'home'});
-  }
+const msgFlash = ref({
+  label: '',
+  msg: '',
+  flag: ''
 });
 
-watch(termsChecked, (terms) => {
-  console.log(terms);
+const userInfo = reactive({
+  name: '',
+  nameError: '',
+  email: '',
+  emailError: '',
+  password: '',
+  passwordError: '',
 });
 
-const closeFlashMesssage = () => { 
-  msgError.value = '';
+
+const closeFlashMesssage = () => {
+  msgFlash.value = {label: '', msg: '', flag: ''};
+}
+
+const handleChange = ({name, value}) => {
+  userInfo[name] = value;
 }
 
 const validateInput = () => {
-  !validateName(name.value.trim())
-    ? nameError.value = name.value ? 'Enter a valid name' : 'Name is required'
-    : nameError.value = ''
-  !validateEmail(email.value.trim())
-    ? emailError.value = email.value ? 'Enter a valid email address' : 'Email is required'
-    : emailError.value = ''
-  !validatePassword(password.value.trim())
-    ? passwordError.value = password.value ? 'Password size must be at least 6' : 'Password is required'
-    : passwordError.value = ''
+  !validateName(userInfo.name.trim())
+    ? userInfo.nameError = userInfo.name ? 'Enter a valid name' : 'Name is required'
+    : userInfo.nameError = ''
+  !validateEmail(userInfo.email.trim())
+    ? userInfo.emailError = userInfo.email ? 'Enter a valid email address' : 'Email is required'
+    : userInfo.emailError = ''
+  !validatePassword(userInfo.password.trim())
+    ? userInfo.passwordError = userInfo.password ? 'Password size must be at least 6' : 'Password is required'
+    : userInfo.passwordError = ''
 }
 
 /**
@@ -148,18 +127,20 @@ const register = () => {
 
   validateInput();
 
-  if (!nameError.value && !emailError.value && !passwordError.value) {
+  if (!userInfo.nameError && !userInfo.emailError && !userInfo.passwordError) {
     if (termsChecked.value) {
       store.dispatch('user/registerUser', {
-        name: name.value,
-        email: email.value,
-        password: password.value
+        name: userInfo.name,
+        email: userInfo.email,
+        password: userInfo.password
       }).catch((error) => {
-        msgError.value = 'An account is already registered with your email address';
+        let msgError = 'An account is already registered with your email address';
+        msgFlash.value = {label: 'Oh snap!', msg: msgError, flag: 'ERROR_FLAG'};
         console.log(error.code);
       })
     } else {
-      msgError.value = 'You must agree to our terms of services and privacy policy'
+      let msgError = 'You must agree to our terms of services and privacy policy'
+      msgFlash.value = {label: 'Warning!', msg: msgError, flag: 'WARNING_FLAG'};
     }
   }
 }

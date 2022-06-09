@@ -1,5 +1,5 @@
 <template>
-  <section class="products">
+  <section id="products" class="products">
     <div class="container">
       <h2 class="title">Check out our <br/> products</h2>
       <p class="description">
@@ -9,7 +9,8 @@
       <div class="grid">
         <product-card-item 
         v-for="product in products" :key="product.id"
-        :item="product"
+        :data="product"
+        :show-cart="true"
         @update-cart="updateCart"
         />
       </div>
@@ -80,12 +81,5 @@ const updateCart = (value) => {
       }
     }
   }
-  .flash__msg {
-  position: fixed;
-  bottom: $size-xl;
-  left: 0;
-  width: 100%;
-  z-index: $font-tooltip;
-}
 }
 </style>

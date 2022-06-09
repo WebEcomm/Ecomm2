@@ -153,6 +153,13 @@ const emit = defineEmits(['onClose']);
 <style scoped lang="scss">
 @use '@/assets/styles' as *;
 
+ .flash__msg {
+  position: fixed;
+  bottom: $size-xl;
+  left: 0;
+  width: 100%;
+  z-index: $font-fixed;
+ }
 .flash {
   @include shape-box(auto, $size-biggest, $size-l);
   position: relative;

@@ -11,7 +11,7 @@
         :value="props.value"
         :placeholder="props.label"
         class="input"
-        @keyup="handleChange"
+        v-on:input="handleChange"
       />
     </div>
     <span class="msg" v-if="props.valueError">
@@ -32,11 +32,12 @@ const props = defineProps({
   valueError: { type: String, required: true },
 });
 
-const emit = defineEmits(['updateValue']);
+const emit = defineEmits(['update:value']);
 
 const handleChange = (e) => {
-  emit('updateValue', e.target);
+  emit('update:value', e.target);
 }
+
 </script>
 
 <style scoped lang="scss">
