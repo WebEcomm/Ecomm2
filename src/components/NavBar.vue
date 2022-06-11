@@ -21,6 +21,7 @@
       class="toggle"
     >
       <i class='bx bx-shopping-bag' ></i>
+      <span class="count" >{{NumberOfProducts}}</span>
     </button>
   </nav>
 </template>
@@ -71,14 +72,18 @@ const showAuthLink = (currentUser) => {
     //
     menuLinks.value = [
       ...menuLinks.value,
-       {id: '5', name: 'Connexion', path: './connexion/login', icon: 'user'},
-       {id: '6', name: 'Register', path: './connexion/register', icon: 'user'}
+       {id: '5', name: 'Connexion', path: '/connexion/login', icon: 'user'},
+       {id: '6', name: 'Register', path: '/connexion/register', icon: 'user'}
     ];
     menuLinks.value 
       = menuLinks.value
         .filter(MenuPasConnecte);
   }
 }
+
+const NumberOfProducts = computed(() => 
+  store.getters['product/getNumberOfProducts']
+);
 
 const MenuPasConnecte = (link) => {
   if (link.name != 'Déconnexion' & link.name !='Cart' & link.name !='Favourite' & link.name != 'Profile') {
@@ -91,8 +96,6 @@ const MenuConnecte = (link) => {
     return link.name; 
   }
 }
- 
-
 
  const openMenu = () => {
   showMenu.value = true;

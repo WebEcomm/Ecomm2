@@ -12,13 +12,20 @@
         <h2 class="title">{{ props.item.title }}</h2>
         <span class="price">${{ props.item.price }}</span>
       </div>
+      <button class="btn" @click="removeFromCart">
+      <i>Supprimer</i>
+      </button>
     </div>
+     
   </article>
 </template>
 
 <script setup>
 import { defineProps } from 'vue';
 import { useLink, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const props = defineProps({
   item: {
@@ -26,13 +33,18 @@ const props = defineProps({
     required: true
   }
 });
+
+const removeFromCart=() => {
+   store.dispatch('product/removeFromCart', {productId : props.item.id})
+};
+
 console.log(props)
 const showProduct = () => {
   const l = useLink({name: 'product', params: {id: props.item.id}})
   console.log(l.route)
   const r = useRouter();
   r.push({name: 'home', params: {id: props.item.id}})
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -88,7 +100,7 @@ const showProduct = () => {
       }
       .price { @extend .title; }
     }
-    .btn {
+       .btn {
       @include shape-square(max-content, $size-xs, $color-primary);
       display: flex;
       justify-content: center;
@@ -99,5 +111,6 @@ const showProduct = () => {
       &:hover { background-color: $color-primary-alt; }
     }
   }
+ 
 }
 </style>

@@ -30,7 +30,7 @@ const validateExpirationDate = (expirationDate) => {
 }
 
 const validateSecurityCode = (securityCode) => {
-  let re = new RegExp(/^[0-9]{3,4}$/);
+  let re = new RegExp(/^[0-9]{3,3}$/);
   return re.test(securityCode);
 }
 

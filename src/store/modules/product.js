@@ -20,6 +20,9 @@ export default {
 	getProductsIdInCart(state) {
       return state.cart;
     },
+    getNumberOfProducts(state) {
+      return state.cart.length;
+    },
     getProductsInCart(state) {
       let cartEntire = [];
       state.cart.map((element) => {
@@ -71,6 +74,9 @@ export default {
 	addToCart(state, productId){
       console.log(productId);
       state.commit("PUT_IN_CART", productId);
+    },
+    removeFromCart(state, productId) {
+      state.commit("REMOVE_FROM_CART", productId);
     },
     async setNote ({dispatch, commit}, {productId, rate}) {
       await updateDoc(doc(db, 'product', productId), {
