@@ -12,7 +12,11 @@
         />
       </div>
       <div class="payment">
-          <h2>Total cost : {{totalCost}}</h2>
+          <h2>Total cost : {{totalCost}} €</h2>
+          <router-link :to="{name: 'payment', params: {price: totalCost}}">
+          <button class="payment-btn">Pay</button>
+          </router-link>
+          
       </div>
       </div>
   </section>
@@ -68,6 +72,17 @@ const totalCost = computed(() => store.getters['product/getTotalCost']);
     }
     .payment {
         h2 {text-align: center;}
+        button {
+          display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: $size-m;
+        border-radius: $size-s;
+        font-size: $size-m;
+        color: $color-white;
+        background-color: $color-primary;
+        }
     }
   }
 }
