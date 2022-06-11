@@ -35,7 +35,8 @@ const props = defineProps({
 });
 
 const removeFromCart=() => {
-   store.dispatch('product/removeFromCart', {productId : props.item.id})
+  console.log("props id : "+ props.item.id);
+   store.dispatch('product/removeFromCart', {productId: props.item.id})
 };
 
 console.log(props)
@@ -101,14 +102,14 @@ const showProduct = () => {
       .price { @extend .title; }
     }
        .btn {
-      @include shape-square(max-content, $size-xs, $color-primary);
+      @include shape-square(max-content, $size-xs, $color-error-alt);
       display: flex;
       justify-content: center;
       align-items: center;
       padding: $size-xxs;
       font-size: $size-xl;
       color: $color-icon;
-      &:hover { background-color: $color-primary-alt; }
+      &:hover { background-color: $color-error; }
     }
   }
  
