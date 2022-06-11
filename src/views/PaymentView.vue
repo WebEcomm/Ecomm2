@@ -57,7 +57,9 @@
 import {ref} from 'vue';
  import {validateCreditCard, validateName, validateExpirationDate, validateSecurityCode} from '@/utils'; 
 import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
 
+const store = useStore();
 const router = useRouter();
 
 const name = ref('');
@@ -88,6 +90,7 @@ const validateInput = () => {
 const payment = () => {
   validateInput();
    if (!nameError.value && !creditCardError.value && !expirationDateError.value && !securityCodeError.value){
+      store.dispatch('product/emptyCart');
       router.push("/successful-payment");
    }
 }

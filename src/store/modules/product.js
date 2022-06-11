@@ -1,6 +1,6 @@
 import { collection, doc, getDocs, updateDoc, where, query, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db, getFileURL } from '@/firebase';
-import { SET_NOTE, PUT_IN_CART, REMOVE_FROM_CART } from '@/store/mutation-types';
+import { SET_NOTE, PUT_IN_CART, REMOVE_FROM_CART, EMPTY_CART } from '@/store/mutation-types';
 
 
 
@@ -58,6 +58,9 @@ export default {
     },
     [REMOVE_FROM_CART](state, idCart){
           state.cart.splice(idCart, 1);
+    },
+    [EMPTY_CART](state){
+      state.cart = [];
     }
   },
   actions: {
@@ -83,7 +86,9 @@ export default {
           commit("REMOVE_FROM_CART", idCart);
         }
       })
-          
+    },
+    emptyCart({commit}) {
+            commit("EMPTY_CART");
     },
     async setNote ({dispatch, commit}, {productId, rate}) {
       await updateDoc(doc(db, 'product', productId), {
