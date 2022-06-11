@@ -72,17 +72,12 @@ export default {
           })
       });
     },
-    async isLoggedUser ({state, dispatch}) {
-      return new Promise((resolve, reject ) => {
-        onAuthStateChanged(auth, (user) => {
-          if (user && !state.user) {
-            // User is signed in
-            dispatch('setUserProfile', user);
-            resolve();
-          } else {
-            reject('error : No user!');
-          }
-        })
+    isLoggedUser ({state, dispatch}) {
+      onAuthStateChanged(auth, (user) => {
+        if (user && !state.user) {
+          // User is signed in
+          dispatch('setUserProfile', user);
+        }
       });
     },
     logout ({state, commit}) {

@@ -9,11 +9,11 @@ const categoryItems = [
 ];
 
 const productItems = [
-  { id: 0, image: require('@/assets/images/product1.png'), title: 'Beats Solo1', price: 249.6, rate: 2 },
-  { id: 1, image: require('@/assets/images/product2.png'), title: 'Beats Solo2', price: 249.6, rate: 5 },
-  { id: 2, image: require('@/assets/images/product3.png'), title: 'Beats Solo3', price: 249.6, rate: 3 },
-  { id: 3, image: require('@/assets/images/product4.png'), title: 'Beats Solo4', price: 249.6, rate: 2 },
-  { id: 4, image: require('@/assets/images/product5.png'), title: 'Beats Solo5', price: 249.6, rate: 4 },
+  { id: 0, icon: 'product1.png', title: 'Beats Solo1', price: 249.6, rate: 2 },
+  { id: 1, icon: 'product2.png', title: 'Beats Solo2', price: 249.6, rate: 5 },
+  { id: 2, icon: 'product3.png', title: 'Beats Solo3', price: 249.6, rate: 3 },
+  { id: 3, icon: 'product4.png', title: 'Beats Solo4', price: 249.6, rate: 2 },
+  { id: 4, icon: 'product5.png', title: 'Beats Solo5', price: 249.6, rate: 4 },
 ];
 
 // contient les identifiants des produits favoris.

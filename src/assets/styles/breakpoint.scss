@@ -1,15 +1,15 @@
 @mixin for-phone-only {
-    @media screen and (max-width: 767px) { @content; }
+    @media (max-width: 599px) { @content; }
   }
   @mixin for-tablet-portrait-up {
-    @media screen and (min-width: 540px) { @content; }
+    @media (min-width: 600px) { @content; }
   }
   @mixin for-tablet-landscape-up {
-    @media screen and (min-width: 767px) { @content; }
+    @media (min-width: 968px) { @content; }
   }
   @mixin for-desktop-up {
-    @media screen and (min-width: 968px) { @content; }
+    @media (min-width: 1200px) { @content; }
   }
   @mixin for-big-desktop-up {
-    @media screen and (min-width: 1024px) { @content; }
+    @media (min-width: 1800px) { @content; }
   }

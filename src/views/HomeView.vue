@@ -1,156 +1,37 @@
 <template>
   <section class="home">
     <div class="container">
-      <!-- SWIPER -->
-      <swiper
-        class="swiper"
-        :slides-per-view="'auto'"
-        :space-between="30"
-        :autoplay="autoplay"
-        :pagination="pagination"
-      >
-        <swiper-slide>
-          <div 
-            :style="{backgroundImage: 'url(\'' + require('@/assets/images/home1.jpg') + '\')'}"
-            class="slide slide--1"
-          >
-            <div class="content">
-              <span class="title">New Items with <br/> Free shipping</span>
-              <button class="btn">Shop now</button>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div 
-            :style="{backgroundImage: 'url(\'' + require('@/assets/images/home2.jpg') + '\')'}"
-            class="slide slide--2"
-          >
-            <div class="content">
-              <span class="special">Special offer</span>
-              <span class="title">Black<br/> Friday</span>
-              <button class="btn">
-                <i class='bx bx-right-arrow-alt'></i>
-              </button>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div 
-            :style="{backgroundImage: 'url(\'' + require('@/assets/images/home3.jpg') + '\')'}"
-            class="slide slide--2"
-          >
-            <div class="content">
-              <div class="special">Special offer</div>
-              <span class="title">Black<br/> Friday</span>
-              <button class="btn">
-                <i class='bx bx-right-arrow-alt'></i>
-              </button>
-            </div>
-          </div>
-        </swiper-slide>
-      </swiper>
-      <!-- CATEGORY -->
-      <category-list />
-      <!-- FAVOURITE PRODUCTS -->
-      <product-list />
+      <!-- IMAGE -->
+      <img src="@/assets/images/home.png" alt="home" class="img" />
+      <!-- DATA -->
+      <div class="data">
+        <h2 class="title">On ear Beat 3</h2>
+        <p class="description">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam esse tenetur cumque itaque unde velit autem facere, quia aliquid eos.
+        </p>
+      </div>
+      <!-- SOCIAL -->
+      <div class="social">
+        <span class="follow">Follow Us</span>
+        <div class="separator"></div>
+        <ul class="links">
+          <a href="https://www.facebook.com" target="_blank" class="link">
+            <i class='bx bxl-facebook' ></i>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" class="link">
+            <i class='bx bxl-instagram' ></i>
+          </a>
+          <a href="https://www.twitter.com" target="_blank" class="link">
+            <i class='bx bxl-twitter' ></i>
+          </a>
+        </ul>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { CategoryList, ProductList } from '@/components';
-// Import Swiper Vue.js components
-import { Swiper, SwiperSlide  } from 'swiper/vue';
-import SwiperCore, { Autoplay, Pagination } from "swiper";
-
-// Import Swiper styles
-import 'swiper/scss';
-import 'swiper/scss/pagination';
-
-SwiperCore.use([Pagination, Autoplay]);
-const pagination = { clickable: true };
-const autoplay = { disableOnInteraction: false, delay: 2500 };
-
 </script>
-
-<style scoped lang="scss">
-@use '@/assets/styles' as *;
-
-.swiper {
-  width: 100%;
-  height: 220px;
-}
-
-.slide {
-  @include shape-square(100%);
-  display: flex;
-  padding: $size-bigger $size-l;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center right;
-  background-color: $color-icon;
-  .content {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    .title {
-      font-weight: $font-semi-bold;
-      color: $color-white;
-    }
-    .btn {
-      font-weight: $font-semi-bold;
-      color: $color-title;
-    }
-  }
-  &--1 {
-    .content {
-      .title {
-        font-size: $size-l;
-        font-style: italic;
-      }
-      .btn {
-        width: fit-content;
-        position: relative;
-        font-weight: $font-semi-bold;
-        color: $color-white;
-        &::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          @include shape-box(100%, $size-xxs, $size-s, $color-white);
-        }
-      }
-    }
-  }
-  &--2 {
-    .content {
-      position: relative;
-      .special { 
-        padding: $size-xxs;
-        font-size: $size-s;
-        text-transform: uppercase;
-        font-weight: $font-semi-bold;
-        color: $color-text-light;
-        @include shape-square(fit-content, $size-xs, $color-shadow-light);
-      }
-      .title {
-        font-size: $size-xl;
-        text-transform: uppercase;
-      }
-      .btn {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        @include shape-circle(2*$size-xl, $color-white);
-        font-size: $size-l;
-      }
-    }
-  }
-}
-
-</style>
 
 <style scoped lang="scss">
 /*========== VARIABLES ==========*/
@@ -158,9 +39,68 @@ const autoplay = { disableOnInteraction: false, delay: 2500 };
 
 .home {
   .container {
-    display: flex;
-    flex-direction: column;
-    row-gap: $size-m;
+    position: relative;
+    display: grid;
+    row-gap: $size-xl;
+    .img { width: 200px; justify-self: center; }
+    .data {
+      .title { text-align: left; margin-bottom: $size-m; }
+      .description { margin-bottom: $size-xxl; }
+      .btn {
+        @include color-neumorphism-out;
+        display: flex;
+        align-items: center;
+        column-gap: $size-xxs;
+        padding: $size-m $size-l;
+        border-radius: $size-xs;
+        //background-color: $color-primary;
+        transition: .3s;
+        &:hover .icon { 
+          transform: rotate(45deg) translate($size-xxs, -$size-xxs); 
+        }
+        &:active {
+          @include color-neumorphism-in;
+        }
+        .label { color: $color-title; }
+        .icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transform: rotate(45deg);
+          transition: .3s;
+          color: $color-title;
+          
+        }
+      }
+    }
+    .social {
+      position: absolute;
+      top: 2rem;
+      right: -1rem;
+      display: grid;
+      justify-items: center;
+      .follow {
+        position: relative;
+        font-size: $size-s;
+        font-weight: $font-medium;
+        transform: rotate(90deg);
+      }
+      .separator {
+        @include shape-box(2px,$size-l,$size-m,$color-text);
+        margin-top: $size-xxl;
+        margin-bottom: $size-s;
+      }
+      .links {
+        display: flex;
+        flex-direction: column;
+        row-gap: $size-xxs;
+        .link { 
+          color: $color-text-light; 
+          transition: .3s; 
+          &:hover { transform: translateX($size-xs); }
+        }
+      }
+    }
   }
 }
 </style>

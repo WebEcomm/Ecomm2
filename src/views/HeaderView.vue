@@ -1,28 +1,35 @@
 <template>
-  <header class="header">
+  <header v-show="showNavbar">
     <nav-bar />
   </header>
 </template>
 
 <script setup>
 import { NavBar } from '@/components';
-import { onMounted } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const user = computed(() => store.getters['user/getUser']);
+
+const showNavbar = ref(false);
 
 onMounted(() => {
-  window.addEventListener('scroll', scrollHeader);
+  checkUser(user.value);
 })
 
-const scrollHeader = () => {
-  const header = document.getElementsByTagName('header').item(0);
-  const scrollY = window.pageYOffset;
-  scrollY >= 30
-    ? header.classList.add('scroll-header')
-    : header.classList.remove('scroll-header')
-}
+watch(user, (currentUser) => {
+  checkUser(currentUser);
+})
 
+const checkUser = (user) => {
+  user
+    ? showNavbar.value = true
+    : showNavbar.value = true
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @use '@/assets/styles' as *;
 
 header {
@@ -32,9 +39,5 @@ header {
   z-index: $font-fixed;
   width: 100%;
   background: $color-body;
-  transition: .4s;
-}
-.scroll-header {
-  box-shadow: $color-header-shadow;
 }
 </style>

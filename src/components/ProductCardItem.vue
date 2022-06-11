@@ -1,8 +1,8 @@
 <template>
   <article class="card">
-    <div class="circle" :style="{backgroundColor: props.data.tintColor}"></div>
+    <div class="circle" :style="{backgroundColor: props.item.tintColor}"></div>
     <img 
-      :src="props.data.image" 
+      :src="props.item.image" 
       alt="product1" 
       class="img" 
       @click="showProduct"
@@ -10,20 +10,17 @@
     <div class="note">
       <span 
         v-for="i in 5" :key="i" 
-        :class="{'star': true, 'star--dark' : i > props.data.rate}" 
+        :class="{'star': true, 'star--dark' : i > props.item.rate}" 
         @click="updateNote(i)">
         ⭐
       </span>
     </div>
     <div class="content">
       <div class="details">
-        <h2 class="title">{{ props.data.title }}</h2>
-        <span class="price">${{ props.data.price }}</span>
+        <h2 class="title">{{ props.item.title }}</h2>
+        <span class="price">${{ props.item.price }}</span>
       </div>
-      <button 
-        v-if="props.showCart"
-        class="btn" @click="addToCart"
-      >
+      <button class="btn" @click="addToCart">
         <i class='bx bx-shopping-bag' ></i>
       </button>
     </div>
@@ -36,13 +33,9 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 const props = defineProps({
-  data: {
+  item: {
     type: Object,
     required: true
-  },
-  showCart: {
-    type: Boolean,
-    default: false
   }
 });
 
@@ -52,18 +45,19 @@ const store = useStore();
 const router = useRouter();
 
 const updateNote = (newNote) => {
-  store.dispatch('product/setNote', {productId: props.data.id, rate: newNote});
+  store.dispatch('product/setNote', {productId: props.item.id, rate: newNote});
 }
 
 const showProduct = () => {
-  router.push({name: 'product', params: {id: props.data.id}})
+  router.push({name: 'product', params: {id: props.item.id}})
 }
 
 const addToCart = () => {
   const user = computed(() => store.getters['user/getUser']);
   let msg = '';
   user.value
-    ? msg = `${user.value.name}: product {${props.data.title}} add to your cart!`
+    ? msg = `${user.value.name}: product {${props.item.title}} add to your cart!`
+    & store.dispatch('product/addToCart', {productId : props.item.id})
     : msg = 'Please sign in before !'
   emit('updateCart', msg);
 }
@@ -77,15 +71,14 @@ const addToCart = () => {
   @include color-neumorphism-out;
   position: relative;
   display: grid;
-  row-gap: $size-xs;
-  margin: $size-m 0;
+  row-gap: $size-s;
   padding: $size-s;
   border-radius: $size-m;
   &:hover .img {
     transform: translateY(-$size-xs);
   }
   .circle {
-    @include shape-circle(70px,$color-primary);
+    @include shape-circle(120px,$color-primary);
     position: absolute;
     top: 20%;
     left: 45%;
@@ -95,24 +88,21 @@ const addToCart = () => {
       position: absolute;
       top: -$size-xxs;
       left: -$size-xxs;
-      @include shape-circle(75px);
+      @include shape-circle(125px);
       backdrop-filter: blur(70px);
     }
   }
   .img {
-    @include shape-square(100px);
+    @include shape-square(150px);
     object-fit: contain;
     justify-self: center;
     transition: .3s;
     z-index: $font-tooltip;
   }
-  .note {
-    display: flex;
-    .star {
-      cursor: pointer;
-      text-shadow: 0 0 8px #ffdc188c, 0 0 16px #ffffff54;
-      &--dark { opacity:0.5; text-shadow: none; }
-    }
+  .star {
+    cursor: pointer;
+    text-shadow: 0 0 8px #ffdc188c, 0 0 16px #ffffff54;
+    &--dark { opacity:0.5; text-shadow: none; }
   }
   .content {
     display: flex;

@@ -11,20 +11,23 @@
     </router-link>
     <!-- MENU -->
     <nav-menu 
+      @close-menu="closeMenu"
       :showMenu="showMenu"
       :links="menuLinks" 
     />
-    <!-- SEARCH BUTTON -->
+    <!-- BOUTON MENU -->
     <button 
-      class="btn"
+      @click="openMenu"
+      class="toggle"
     >
-      <i class='bx bx-search' ></i>
+      <i class='bx bx-shopping-bag' ></i>
     </button>
   </nav>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
+import { useStore } from 'vuex';
 import { NavMenu } from './';
 
 const menuLinks = ref([
@@ -34,6 +37,70 @@ const menuLinks = ref([
   { id: 4, name: 'Cart', path: '/cart', icon: 'shopping-bag' },
   { id: 4, name: 'Profile', path: '/profile', icon: 'user' },
 ]);
+
+const store = useStore();
+
+const user = computed(() => store.getters['user/getUser']);
+
+const showMenu = ref(false);
+
+onBeforeMount(() => {
+  showAuthLink(user.value);
+})
+
+watch(user, (currentUser) => {
+  showAuthLink(currentUser);
+  
+})
+
+const showAuthLink = (currentUser) => {
+  //
+  if (currentUser) {
+    //
+    menuLinks.value = [
+      ...menuLinks.value,
+      { id: '3', name: 'Favourite', path: '/favourite', icon: 'heart' },
+      { id: '4', name: 'Cart', path: '/cart', icon: 'shopping-bag' },
+      { id: '4', name: 'Profile', path: '/profile', icon: 'user' },
+      {id: '5', name: 'Déconnexion', path: './'}
+    ];
+    menuLinks.value 
+      = menuLinks.value
+        .filter(MenuConnecte);
+  } else {
+    //
+    menuLinks.value = [
+      ...menuLinks.value,
+       {id: '5', name: 'Connexion', path: './connexion/login', icon: 'user'},
+       {id: '6', name: 'Register', path: './connexion/register', icon: 'user'}
+    ];
+    menuLinks.value 
+      = menuLinks.value
+        .filter(MenuPasConnecte);
+  }
+}
+
+const MenuPasConnecte = (link) => {
+  if (link.name != 'Déconnexion' & link.name !='Cart' & link.name !='Favourite' & link.name != 'Profile') {
+    return link.name; 
+  }
+}
+
+const MenuConnecte = (link) => {
+   if ( link.name !='Connexion' & link.name != 'Register') {
+    return link.name; 
+  }
+}
+ 
+
+
+ const openMenu = () => {
+  showMenu.value = true;
+ }
+
+const closeMenu = () => {
+  showMenu.value = false;
+}
 
 </script>
 
@@ -45,16 +112,14 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: $size-header-height;
-  @include media-for-tablet-landscape-up {
-    height: $size-header-height + $size-xl;
-  }
+  background: $color-body;
   .logo { 
     display: flex; 
     align-items: center;
     column-gap: $size-xxs;
-    .img { width: $size-xl; }
-    .title { font-weight: $font-medium; color: $color-title; }
+    width: $size-xl; 
+    .title { color: $color-title; }
   }
-  .btn { font-size: $size-xl; color: $color-text; }
+  .toggle { font-size: $size-xl; color: $color-text; }
 }
 </style>
