@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-/*import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { HeaderView } from '@/views';
 import { useRouter } from 'vue-router';
@@ -43,7 +43,7 @@ watch(user, (currentUser) => {
     showHeader.value = false;
     router.push({name: 'login'});
   }
-});*/
+});
 </script>
 
 <style scoped lang="scss">
