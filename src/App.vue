@@ -1,16 +1,21 @@
 <template>
+  <div>App Headphone</div>
+</template>
+
+
+<!-- <template>
   <main class="theme--dark">
     <header-view v-if="showHeader"/>
-    <!-- <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component }">
       <transition name="slide">
         <component :is="Component" />
       </transition>
-    </router-view> -->
+    </router-view>
   </main>
 </template>
 
 <script setup>
-/*import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { HeaderView } from '@/views';
 import { useRouter } from 'vue-router';
@@ -43,7 +48,7 @@ watch(user, (currentUser) => {
     showHeader.value = false;
     router.push({name: 'login'});
   }
-});*/
+});
 </script>
 
 <style scoped lang="scss">
@@ -101,4 +106,4 @@ html {
   }
 }
 </style>
-
+ -->
