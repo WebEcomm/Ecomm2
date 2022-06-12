@@ -1,11 +1,11 @@
 <template>
   <main class="theme--dark">
     <header-view v-if="showHeader"/>
-    <!-- <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component }">
       <transition name="slide">
         <component :is="Component" />
       </transition>
-    </router-view> -->
+    </router-view>
   </main>
 </template>
 
