@@ -1,4 +1,9 @@
 <template>
+  <div>App Headphone</div>
+</template>
+
+
+<!-- <template>
   <main class="theme--dark">
     <header-view v-if="showHeader"/>
     <router-view v-slot="{ Component }">
@@ -101,4 +106,4 @@ html {
   }
 }
 </style>
-
+ -->
