@@ -11,17 +11,12 @@
           :vertical="true"
           :renderItem="CartCardItem"
         /> -->
-        <div class="item" v-for="product in cart" :key="product.id">
+        <div class="item" v-for="product in favourite" :key="product.id">
           <cart-card-item :data="product" :show-option="true" />
         </div>
       </div>
 
-      <div class="payment">
-        <h2>Total cost : {{totalCost}} €</h2>
-        <router-link :to="{name: 'payment', params: {price: totalCost}}">
-        <button class="payment-btn">Pay</button>
-        </router-link>
-      </div>
+      
     </div>
   </section>
 </template>
@@ -35,11 +30,11 @@ const store = useStore();
 
 //const idP = store.getters['product/getProductsIdInCart'];
 
-const cart = computed(() => store.getters['product/getProductsInCart'] );
+const favourite = computed(() => store.getters['product/getProductsInFavourite'] );
 
-const totalCost = computed(() => store.getters['product/getTotalCost']);
+console.log(favourite.value)
 
-watch(cart, (current) => {
+watch(favourite, (current) => {
   console.log('cart', current);
 })
 

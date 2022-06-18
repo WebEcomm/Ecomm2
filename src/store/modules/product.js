@@ -3,12 +3,15 @@ import { db, getFileURL } from '@/firebase';
 import { SET_NOTE, PUT_IN_CART, REMOVE_FROM_CART } from '@/store/mutation-types';
 
 
+
 export default {
   namespaced: true,
   state: {
     currentProduct: {},
     products: [],
-	cart: [],
+    cart: [],
+    order: [],
+    favourite: [],
   },
   getters: {
     getProducts(state) {
@@ -20,24 +23,48 @@ export default {
 	getProductsIdInCart(state) {
       return state.cart;
     },
+    getNumberOfProducts(state) {
+      return state.cart.length;
+    },
     getProductsInCart(state) {
       let cartEntire = [];
-      state.cart.map((element) => {
-        console.log('element '+ element.productId);
+      state.cart.map((productId) => {
         let newProduct = state.products.find((product) => 
-         element.productId == product.id);
+         productId == product.id);
             cartEntire.push(newProduct);
       });
       return cartEntire;
     },
     getTotalCost(state, getters) {
-       let totalCost = 0.0; 
+      let totalCost = 0.0; 
       let cartEntire = getters.getProductsInCart; 
       cartEntire.map((item) => {
       totalCost += item.price;
       })
     return totalCost; 
-    }
+    },
+    getAllOrders (state) {
+      return state.order;
+    },
+    getProductsInOrder(state) {
+      let orderEntire = [];
+      state.order.map((productId) => {
+        let newProduct = state.products.find((product) => productId === product.id);
+        orderEntire.push(newProduct);
+      });
+      return orderEntire;
+    },
+    getAllFavourite (state) {
+      return state.favourite;
+    },
+    getProductsInFavourite(state) {
+      let favouriteEntire = [];
+      state.favourite.map((productId) => {
+        let newProduct = state.products.find((product) => productId === product.id);
+        favouriteEntire.push(newProduct);
+      });
+      return favouriteEntire;
+    },
   },
   mutations: {
     setProducts (state, newProduct) {
@@ -50,13 +77,19 @@ export default {
       state.currentProduct.rate = note;
     },
 	[PUT_IN_CART](state, id){
-      /* console.log(id); */
       state.cart.push(id);
-      /* console.log(state.cart); */
+      state.order.push(id);
+      console.log('OK')
     },
-    [REMOVE_FROM_CART](state, id){
-      state.cart.splice(id, 1);
-    }
+    [REMOVE_FROM_CART](state, idCart){
+          state.cart.splice(idCart, 1);
+    },
+    addToOrder (state, productId) {
+      state.order.push(productId);
+    },
+    addToFavourite (state, productId) {
+      state.favourite.push(productId);
+    },
   },
   actions: {
     setCurrentProduct ({commit, state}, productId) {
@@ -69,8 +102,21 @@ export default {
       commit('setCurrentProduct', productFound);
     },
 	addToCart(state, productId){
-      console.log(productId);
+      console.log("Add : " + productId);
       state.commit("PUT_IN_CART", productId);
+    },
+    addToFavourite(state, productId){
+      console.log("Add : " + productId);
+      state.commit("addToFavourite", productId);
+    },
+    removeFromCart({commit}, productId) {
+      //let product = state.cart.find((cartId) => cartId === productId);
+      commit('REMOVE_FROM_CART', productId);
+    },
+    addToOrder ({commit}, productsId) {
+      productsId.map((productId) => {
+        commit('addToOrder', productId);
+      });
     },
     async setNote ({dispatch, commit}, {productId, rate}) {
       await updateDoc(doc(db, 'product', productId), {

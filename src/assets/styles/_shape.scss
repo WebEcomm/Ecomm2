@@ -15,6 +15,9 @@
 }
 
 @mixin circle($size, $fill:null) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: $size;
   height: $size;
   background-color: $fill;

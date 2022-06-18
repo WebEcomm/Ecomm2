@@ -1,3 +1,4 @@
+import CartCardItem from './CartCardItem.vue';
 import CategoryList from './CategoryList.vue';
 import FlashMessage from './FlashMessage.vue';
 import FlatList from './FlatList.vue';
@@ -10,6 +11,7 @@ import ProductList from './ProductList.vue';
 
 
 export {
+    CartCardItem,
     CategoryList,
     FlashMessage,
     FlatList,

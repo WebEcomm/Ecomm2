@@ -155,7 +155,7 @@ const emit = defineEmits(['onClose']);
 
  .flash__msg {
   position: fixed;
-  bottom: $size-xl;
+  bottom: $size-navbar-height;
   left: 0;
   width: 100%;
   z-index: $font-fixed;

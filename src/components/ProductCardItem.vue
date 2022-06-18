@@ -1,5 +1,12 @@
 <template>
   <article class="card">
+    <button 
+      class="bookmark"
+      v-if="props.showCart"
+      @click="addToFavourite"
+    >
+      <i class='bx bxs-heart'></i>
+    </button>
     <div class="circle" :style="{backgroundColor: props.data.tintColor}"></div>
     <img 
       :src="props.data.image" 
@@ -21,8 +28,9 @@
         <span class="price">${{ props.data.price }}</span>
       </div>
       <button 
+        class="btn"
         v-if="props.showCart"
-        class="btn" @click="addToCart"
+        @click="addToCart"
       >
         <i class='bx bx-shopping-bag' ></i>
       </button>
@@ -36,14 +44,8 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true
-  },
-  showCart: {
-    type: Boolean,
-    default: false
-  }
+  data: { type: Object, required: true },
+  showCart: { type: Boolean, default: false }
 });
 
 const emit = defineEmits(['updateCart']);
@@ -62,9 +64,24 @@ const showProduct = () => {
 const addToCart = () => {
   const user = computed(() => store.getters['user/getUser']);
   let msg = '';
-  user.value
-    ? msg = `${user.value.name}: product {${props.data.title}} add to your cart!`
-    : msg = 'Please sign in before !'
+  if (user.value) {
+    msg = `${user.value.name}: product {${props.data.title}} add to your cart!`;
+    store.dispatch('product/addToCart', props.data.id);
+  } else {
+    msg = 'Please sign in before !';
+  }
+  emit('updateCart', msg);
+}
+
+const addToFavourite = () => {
+  const user = computed(() => store.getters['user/getUser']);
+  let msg = '';
+  if (user.value) {
+    msg = `${user.value.name}: product {${props.data.title}} add to your cart!`;
+    store.dispatch('product/addToFavourite', props.data.id);
+  } else {
+    msg = 'Please sign in before !';
+  }
   emit('updateCart', msg);
 }
 </script>
@@ -78,11 +95,17 @@ const addToCart = () => {
   position: relative;
   display: grid;
   row-gap: $size-xs;
-  margin: $size-m 0;
   padding: $size-s;
   border-radius: $size-m;
   &:hover .img {
     transform: translateY(-$size-xs);
+  }
+  .bookmark {
+    border: 1px solid;
+    justify-self: flex-end;
+    color: $color-white;
+    font-size: $size-l;
+    @include shape-circle($size-xxl, $color-error);
   }
   .circle {
     @include shape-circle(70px,$color-primary);
@@ -127,13 +150,16 @@ const addToCart = () => {
       .price { @extend .title; }
     }
     .btn {
-      @include shape-square(max-content, $size-xs, $color-primary);
+      position: absolute;
+      bottom: $size-s;
+      right: $size-s;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: $size-xxs;
       font-size: $size-xl;
       color: $color-icon;
+      @include shape-square(max-content, $size-xs, $color-primary);
       &:hover { background-color: $color-primary-alt; }
     }
   }

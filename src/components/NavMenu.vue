@@ -6,7 +6,6 @@
         class="item"
         :key="link.id"
         v-for="(link) in props.links" 
-        @click="handleClick(link)"
       >
         <router-link :to="link.path" 
           :class="{link: true, active: isActived}"
@@ -14,26 +13,26 @@
         >
           <div class="icon">
             <i :class="`bx bx-${link.icon}`"></i>
+            <span class="count" v-if="link.name.toLowerCase() === 'cart'">
+              {{ numberOfProducts }}
+            </span>
           </div>
           <span class="name">{{ link.name }}</span>
         </router-link>
       </li>
     </ul>
-    <!-- BOUTON CLOSE -->
-    <!-- <button 
-      @click="emit('closeMenu')"
-      class="close"
-    >
-      <span>x</span>
-    </button> -->
   </div>
 </template>
     
 <script setup>
-import { defineEmits, defineProps, ref } from 'vue';
+import { computed, defineProps, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
+
+const numberOfProducts = computed(() => 
+  store.getters['product/getNumberOfProducts']
+);
 
 const isActived = ref(false);
 
@@ -49,15 +48,6 @@ const props = defineProps({
     }
   }
 });
-
-const handleClick = (link) => {
-  if (link.name === 'Déconnexion')
-  { store.dispatch('user/logout'); }
-  emit('closeMenu');
-}
-
-// Evenements personalisés
-const emit = defineEmits(['closeMenu']);
 
 const activeLink = () => {
   isActived.value = true
@@ -102,10 +92,31 @@ const activeLink = () => {
         row-gap: $size-xxs;
         font-weight: $font-medium;
         color: $color-title;
-        .icon { font-size: $size-xl; }
+        .icon { 
+          position: relative;
+          font-size: $size-xl; 
+          .count {
+            position: absolute;
+            top: $size-s;
+            right: -$size-s;
+            font-size: $size-s;
+            color: $color-white;
+            @include shape-circle($size-l, $color-primary);
+          }
+        }
         .name { font-size: $size-s; }
         @include media-for-tablet-landscape-up {
-          .icon { display: none; }
+          position: relative;
+          .icon { 
+            position: static;
+            i { display:  none; }
+            .count {
+              position: absolute;
+              top: $size-s;
+              right: -$size-l;
+              @include shape-circle($size-l, $color-primary);
+            }
+          }
           .name { font-size: $size-m; }
         }
       }

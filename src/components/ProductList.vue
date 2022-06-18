@@ -4,7 +4,7 @@
       <flat-list
         class="list"
         :data="productItems"
-        :slides-per-view="2"
+        :slides-per-view="2.5"
         :render-item="ProductCardItem"
       />
   </div>

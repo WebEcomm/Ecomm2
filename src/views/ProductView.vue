@@ -75,9 +75,9 @@ const updateCart = (value) => {
     .grid {
       display: grid;
       @include media-for-phone-only {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
         row-gap: $size-xxl;
-        column-gap: $size-l;
+        column-gap: $size-xxl;
       }
     }
   }

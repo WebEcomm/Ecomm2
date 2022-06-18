@@ -4,10 +4,14 @@ import {
   AuthView, 
   HomeView, 
   ProductView, 
+  OrderView,
   RegisterView, 
   LoginView, 
   SetupProfile,
   CartView,   
+  PaymentView,
+  SuccesfulPaymentView,
+  FavouriteView
 } from '@/views';
 
 const routes = [
@@ -15,7 +19,6 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
-    meta: { transition: 'slide-left' },
   },
   {
     path:"/connexion",
@@ -28,15 +31,34 @@ const routes = [
     ],
   },
   {
+    path: "/profile",
+    name: "profile",
+    component: OrderView,
+  },
+  {
     path: "/products",
     name: "products",
     component: ProductView,
-    meta: { transition: 'slide-right' },
+  },
+  {
+    path: "/favourite",
+    name: "favourite",
+    component: FavouriteView,
   },
   {
     path: "/cart",
     name: "cart",
     component: CartView,
+  },
+  {
+    path: "/payment/:price",
+    name: "payment",
+    component : PaymentView,
+  },
+  {
+    path: "/successful-payment",
+    name: "successfulPayment",
+    component: SuccesfulPaymentView,
   },
   // { 
   //   name: 'movie',
